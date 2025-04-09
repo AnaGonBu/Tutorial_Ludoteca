@@ -1,0 +1,49 @@
+<div class="container">
+    <!-- <h1>Listado de Autores</h1> -->
+    <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="game">
+            <mat-header-cell *matHeaderCellDef> Nombre del Juego  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="client">
+            <mat-header-cell *matHeaderCellDef> Nombre del Cliente  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.client}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="date1">
+            <mat-header-cell *matHeaderCellDef> Fecha Préstamo  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.date1}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="date2">
+            <mat-header-cell *matHeaderCellDef> Fecha Devolución  </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.date2}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button color="accent" (click)="deleteLoan(element)">
+                    <mat-icon>clear</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+    </mat-table>
+
+    <mat-paginator (page)="loadPage($event)" [pageSizeOptions]="pageSizeOptions"  [pageIndex]="pageNumber" [pageSize]="pageSize" [length]="totalElements" showFirstLastButtons></mat-paginator>
+
+    <div class="buttons">
+        <button mat-flat-button color="primary" (click)="createLoan()">Nuevo Préstamo</button> 
+    </div>  
+</div>
+

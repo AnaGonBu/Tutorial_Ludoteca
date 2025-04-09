@@ -1,0 +1,48 @@
+.container {
+    margin: 20px;
+  
+    mat-table {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      background-color: black;
+      color:  #5c5858;
+      text-transform: uppercase;
+      
+  
+      .mat-header-row {
+        background-color:black;
+        
+  
+        mat-header-cell {
+        
+          font-weight: bold;
+          
+        }      
+      }
+      
+       mat-cell {
+          text-transform: none; /* Reset text-transform */
+        }
+      
+  
+      .mat-column-id {
+        flex: 0 0 20%;
+        justify-content: center;
+
+        
+      }
+  
+      .mat-column-action {
+        flex: 0 0 10%;
+        justify-content: center;
+        
+      }
+    }
+    // ng-container{
+    //   color:  #6d6b6b;
+    // }
+  
+    .buttons {
+      text-align: right;
+    }
+  }
