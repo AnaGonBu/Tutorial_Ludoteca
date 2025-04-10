@@ -4,4 +4,5 @@ export class LoanPage {
     content: Loan[];
     pageable: Pageable;
     totalElements: number;
+  array: any;
 }

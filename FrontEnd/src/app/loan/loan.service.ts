@@ -10,8 +10,14 @@ import { Loan } from './model/loan';
 })
 export class LoanService {
 
-
-  constructor() { }
+  private games : string[]
+  private clientsName: string []
+  private arrLoan = LOAN_DATA
+  constructor() { 
+    this.games = []
+    this.clientsName =[]
+  
+  }
 
   
 
@@ -26,5 +32,17 @@ export class LoanService {
   deleteLoan(id: number): Observable<void> {
       return of(null);
   }
-      
+  getClients(): string[] {
+    return this.arrLoan.array.forEach(element => {
+      this.clientsName.push(element.client);
+    return this.clientsName
+    });
+  }   
+  getGames(): string[] {
+    return this.arrLoan.array.forEach(element => {
+      this.games.push(element.name);
+    return this.games
+    });
+  }   
+
 }

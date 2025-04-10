@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoanService } from '../loan.service';
 import { Loan } from '../model/loan';
 import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
+import { LoanEditComponent } from '../loan-register/loan-edit.component';
 
 @Component({
   selector: 'app-loan-list',
@@ -22,13 +23,17 @@ import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dial
 })
 export class LoanListComponent implements OnInit {
 
-pageNumber: number = 0;
-pageSizeOptions : number []= [5,10,15]
-pageSize: number = this.pageSizeOptions[0];
-totalElements: number = 0;
+  pageNumber: number = 0;
+  pageSize: number = 5;
+  totalElements: number = 0;
+
+// pageNumber: number = 0;
+// pageSizeOptions : number []= [5,10,15]
+// pageSize: number = this.pageSizeOptions[0];
+// totalElements: number = 0;
 
 
-displayedColumns: string[] = ['id', 'name', 'client', 'date1', 'date2'];
+displayedColumns: string[] = ['id', 'game', 'client', 'date1', 'date2'];
 dataSource = new MatTableDataSource<Loan>();
 
 constructor (private loanService: LoanService, public dialog: MatDialog){}
@@ -61,10 +66,6 @@ loadPage(event?: PageEvent){
   });
 }
 
-// saveAuthor(author: Author): Observable<void> {
-//   return of(null);
-// }
-
 deleteLoan(loan: Loan) {
   const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: {
@@ -84,7 +85,13 @@ deleteLoan(loan: Loan) {
 }
 
 createLoan() {
-throw new Error('Method not implemented.');
+  const dialogRef = this.dialog.open(LoanEditComponent, {
+    data: {},
+});
+
+dialogRef.afterClosed().subscribe((result) => {
+    this.ngOnInit();
+});
 }
 
 

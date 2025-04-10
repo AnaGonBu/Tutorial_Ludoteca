@@ -1,21 +1,25 @@
 <div class="container">
-    
-    @if (loan.id) {
-        <h1>Eliminar prestamo</h1>
-    } @else {
-        <h1>Nuevo prestamo</h1>
-    }
 
     <form>
         <mat-form-field>
             <mat-label>Identificador</mat-label>
             <input type="text" matInput placeholder="Identificador" [(ngModel)]="loan.id" name="id" disabled>
         </mat-form-field>
-
         <mat-form-field>
-            <mat-label>Nombre</mat-label>
-            <input type="text" matInput placeholder="Nombre de categoría" [(ngModel)]="loan.name" name="name" required>
+            <input type="text" matInput placeholder="Nombre del cliente" [(ngModel)]="loan.client" name="client" required>
             <mat-error>El nombre no puede estar vacío</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text" matInput placeholder="Nombre del juego" [(ngModel)]="loan.name" name="name" required>
+            <mat-error>El nombre no puede estar vacío</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="datetime-local" matInput placeholder="Fecha inicio" [(ngModel)]="loan.date1" name="date1" required>
+            <mat-error>La fecha no puede estar vacía</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type="datetime-local" matInput placeholder="Fecha fin" [(ngModel)]="loan.date2" name="date1" required>
+            <mat-error>La fecha no puede estar vacía</mat-error>
         </mat-form-field>
     </form>
 
