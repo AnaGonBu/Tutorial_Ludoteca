@@ -32,6 +32,10 @@ export class AuthorService {
   deleteAuthor(idAuthor: number) : Observable<void>{
     return this.http.delete<void>(`${this.baseUrl}/${idAuthor}`);
   }
+
+  getAllAuthors(): Observable<Author[]> {
+    return this.http.get<Author[]>(this.baseUrl);
+  }
   /* Mock (sin paginación)
       constructor() {}
 
@@ -47,7 +51,5 @@ export class AuthorService {
         return of(null);
     }
         */
-    getAllAuthors(): Observable<Author[]> {
-      return this.http.get<Author[]>(this.baseUrl);
-  }
+
 }

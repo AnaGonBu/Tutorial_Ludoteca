@@ -2,7 +2,7 @@ import { Component, NgModule, OnInit } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Client } from '../model/Client';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { ClientService } from '../client.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -52,14 +52,14 @@ export class ClientListComponent implements OnInit{
         });
       }
 
-      deleteClient(category: Client) {    
+      deleteClient(client: Client) {    
         const dialogRef = this.dialog.open(DialogConfirmationComponent, {
-          data: { title: "Eliminar cliente", description: "Atención si borra el cliente se perderán sus datos.<br> ¿Desea eliminar el cliente?" }
+          data: { title: `¿Desea eliminar a ${client.name}?`, description: "Atención si borra el cliente se perderán sus datos.<br> ¿Desea eliminar el cliente?" }
         });
     
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.clientService.deleteClient(category.id).subscribe(result => {
+            this.clientService.deleteClient(client.id).subscribe(result => {
               this.ngOnInit();
             }); 
           }

@@ -10,6 +10,7 @@ import { Loan } from './model/loan';
 })
 export class LoanService {
 
+
   constructor() { }
 
   
@@ -18,11 +19,11 @@ export class LoanService {
       return of(LOAN_DATA);
   }
 
-  saveLoan(author: Loan): Observable<void> {
+  saveLoan(loan: Loan): Observable<void> {
       return of(null);
   }
 
-  deleteAuthor(id: number): Observable<void> {
+  deleteLoan(id: number): Observable<void> {
       return of(null);
   }
       

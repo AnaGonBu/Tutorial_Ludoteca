@@ -44,7 +44,7 @@ public class ClientController {
     @Operation(summary = "Alta", description = "Method that saves a new client")
     @RequestMapping(path = "", method = RequestMethod.POST)
     public void save(@RequestBody ClientDto dto) {
-        this.clientService.save(dto);
+        this.clientService.salve(dto);
     }
 
     /**
@@ -55,8 +55,8 @@ public class ClientController {
      */
     @Operation(summary = "Modificacion", description = "Method that modify a  client")
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public void save2(@PathVariable Long id, @RequestBody ClientDto dto) {
-        this.clientService.save(dto);
+    public void modify(@PathVariable(name = "id", required = true) Long id, @RequestBody ClientDto dto) {
+        this.clientService.save2(id, dto);
     }
 
     /**

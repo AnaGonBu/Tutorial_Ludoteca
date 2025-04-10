@@ -1,5 +1,7 @@
 .container {
     margin: 20px;
+    
+  
   
     mat-table {
       margin-top: 10px;
@@ -24,7 +26,6 @@
        mat-cell {
           text-transform: none; /* Reset text-transform */
         }
-      
   
       .mat-column-id {
         flex: 0 0 20%;

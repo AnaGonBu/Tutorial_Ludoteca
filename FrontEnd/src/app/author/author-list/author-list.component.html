@@ -19,10 +19,10 @@
         <ng-container matColumnDef="action">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let element">
-                <button mat-icon-button color="primary" (click)="editAuthor(element)">
+                <button mat-icon-button color="primary" class="editar" (click)="editAuthor(element)">
                     <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button color="accent" (click)="deleteAuthor(element)">
+                <button mat-icon-button color="accent" class="borrar" (click)="deleteAuthor(element)">
                     <mat-icon>clear</mat-icon>
                 </button>
             </mat-cell>

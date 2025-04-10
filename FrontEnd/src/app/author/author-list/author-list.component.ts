@@ -84,9 +84,9 @@ editAuthor(author: Author) {
 deleteAuthor(author: Author) {
   const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: {
-          title: 'Eliminar autor',
-          description:
-              'Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminar el autor?',
+          title: `¿Desea eliminar a ${author.name}?`,
+          description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
+
       },
   });
 

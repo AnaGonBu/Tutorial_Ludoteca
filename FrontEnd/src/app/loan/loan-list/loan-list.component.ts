@@ -8,6 +8,7 @@ import { Pageable } from '../../core/model/page/Pageable';
 import { MatDialog } from '@angular/material/dialog';
 import { LoanService } from '../loan.service';
 import { Loan } from '../model/loan';
+import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
   selector: 'app-loan-list',
@@ -64,10 +65,23 @@ loadPage(event?: PageEvent){
 //   return of(null);
 // }
 
-// deleteAuthor(idAuthor: number): Observable<void> {
-//   return of(null);
-// }
+deleteLoan(loan: Loan) {
+  const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+      data: {
+          title: `¿Desea eliminar a ${loan.name}?`,
+          description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
 
+      },
+  });
+
+  dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+          this.loanService.deleteLoan(loan.id).subscribe((result) => {
+              this.ngOnInit();
+          });
+      }
+  });
+}
 
 createLoan() {
 throw new Error('Method not implemented.');

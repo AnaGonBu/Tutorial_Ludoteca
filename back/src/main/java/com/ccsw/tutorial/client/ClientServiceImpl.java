@@ -26,7 +26,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override //alta
-    public void save(ClientDto dto) {
+    public void salve(ClientDto dto) {
         Client client;
         Client clientName = this.clientRepository.findByName(dto.getName());
         if (clientName == null) {

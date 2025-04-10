@@ -27,7 +27,7 @@ public interface ClientService {
      *
      * @param dto datos de la entidad
      */
-    void save(ClientDto dto);
+    void salve(ClientDto dto);
 
     /**
      * Método para modificar  un cliente

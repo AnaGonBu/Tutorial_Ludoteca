@@ -47,7 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
             category = this.categoryRepository.findById(id).orElse(null);
         }
 
-        category.setName(dto.getName());
+        category.setName(dto.getName()); //control in front
         this.categoryRepository.save(category);
     }
 
