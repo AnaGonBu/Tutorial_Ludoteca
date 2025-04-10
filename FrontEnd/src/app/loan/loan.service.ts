@@ -32,17 +32,17 @@ export class LoanService {
   deleteLoan(id: number): Observable<void> {
       return of(null);
   }
-  getClients(): string[] {
-    return this.arrLoan.array.forEach(element => {
-      this.clientsName.push(element.client);
-    return this.clientsName
-    });
-  }   
-  getGames(): string[] {
-    return this.arrLoan.array.forEach(element => {
-      this.games.push(element.name);
-    return this.games
-    });
-  }   
+  // getClients(): string[] {
+  //   return this.arrLoan.array.forEach(element => {
+  //     this.clientsName.push(element.client);
+  //   return this.clientsName
+  //   });
+  // }   
+  // getGames(): string[] {
+  //   return this.arrLoan.array.forEach(element => {
+  //     this.games.push(element.name);
+  //   return this.games
+  //   });
+  // }   
 
 }

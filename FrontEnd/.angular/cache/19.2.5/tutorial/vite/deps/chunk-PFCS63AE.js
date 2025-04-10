@@ -1,17 +1,15 @@
 import {
   coerceBooleanProperty
-} from "./chunk-QEGPYYQA.js";
+} from "./chunk-X3P5GA7C.js";
 import {
-  MatCommonModule,
-  ObserversModule,
   _IdGenerator
-} from "./chunk-OL7QRPNC.js";
-import {
-  Platform
-} from "./chunk-DWB4KXJV.js";
+} from "./chunk-MJBGDVQM.js";
 import {
   Directionality
 } from "./chunk-PNN2A3NM.js";
+import {
+  Platform
+} from "./chunk-DWB4KXJV.js";
 import {
   NgTemplateOutlet
 } from "./chunk-VJE4L4UK.js";
@@ -29,7 +27,6 @@ import {
   InjectionToken,
   Injector,
   Input,
-  NgModule,
   NgZone,
   Renderer2,
   RendererFactory2,
@@ -50,8 +47,6 @@ import {
   ɵɵdefineComponent,
   ɵɵdefineDirective,
   ɵɵdefineInjectable,
-  ɵɵdefineInjector,
-  ɵɵdefineNgModule,
   ɵɵelement,
   ɵɵelementEnd,
   ɵɵelementStart,
@@ -1576,30 +1571,6 @@ var MatFormField = class _MatFormField {
   });
 })();
 
-// node_modules/@angular/material/fesm2022/module-0776ab9b.mjs
-var MatFormFieldModule = class _MatFormFieldModule {
-  static ɵfac = function MatFormFieldModule_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _MatFormFieldModule)();
-  };
-  static ɵmod = ɵɵdefineNgModule({
-    type: _MatFormFieldModule,
-    imports: [MatCommonModule, ObserversModule, MatFormField, MatLabel, MatError, MatHint, MatPrefix, MatSuffix],
-    exports: [MatFormField, MatLabel, MatHint, MatError, MatPrefix, MatSuffix, MatCommonModule]
-  });
-  static ɵinj = ɵɵdefineInjector({
-    imports: [MatCommonModule, ObserversModule, MatCommonModule]
-  });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(MatFormFieldModule, [{
-    type: NgModule,
-    args: [{
-      imports: [MatCommonModule, ObserversModule, MatFormField, MatLabel, MatError, MatHint, MatPrefix, MatSuffix],
-      exports: [MatFormField, MatLabel, MatHint, MatError, MatPrefix, MatSuffix, MatCommonModule]
-    }]
-  }], null, null);
-})();
-
 export {
   MatLabel,
   MAT_ERROR,
@@ -1615,7 +1586,6 @@ export {
   getMatFormFieldMissingControlError,
   MAT_FORM_FIELD,
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
-  MatFormField,
-  MatFormFieldModule
+  MatFormField
 };
-//# sourceMappingURL=chunk-DJWPHTZG.js.map
+//# sourceMappingURL=chunk-PFCS63AE.js.map
