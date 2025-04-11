@@ -1,30 +1,38 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Loan } from '../model/loan';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
 import { LoanService } from '../loan.service';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
-import { Client } from '../../client/model/Client';
-import { Game } from '../../game/model/Game';
-import { CLIENT_DATA } from '../../client/model/mock-clients';
-import { GAME_DATA } from '../../game/model/mock-games';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { Loan } from '../model/loan';
 
 @Component({
   selector: 'app-loan-edit',
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule,MatSelectModule, MatDatepickerModule],
+  imports: [FormsModule,
+            CommonModule, 
+            ReactiveFormsModule, 
+            MatFormFieldModule, 
+            MatInputModule, 
+            MatButtonModule,
+            MatSelectModule, 
+            MatDatepickerModule,
+            MatNativeDateModule],
   templateUrl: './loan-edit.component.html',
   styleUrl: './loan-edit.component.scss'
 })
 export class LoanEditComponent implements OnInit {
 
   loan: Loan;
+  maxDate: Date;
+  clientNames: string[] = [];
+  gameNames: string[] = [];
 
-  // clientNames: string[] = []
-  // gameTitles: string[] = []
+
   
   
 
@@ -33,35 +41,74 @@ export class LoanEditComponent implements OnInit {
     public dialogRef: MatDialogRef<LoanEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private loanService: LoanService
-) {}
+) {
+  this.loan = new Loan();
+  this.maxDate = new Date();
+}
 
   ngOnInit(): void {
     // this.loan = new Loan()
     this.loan = this.data.loan ? Object.assign({}, this.data.loan) : new Loan();
-    // this.clientNames=this.loanService.getClients()
-    // this.gameTitles=this.loanService.getGames()
+    this.loanService.getClients().subscribe(clients => {
+      this.clientNames = clients;
+    });
+
+    this.loanService.getGames().subscribe(games => {
+      this.gameNames = games;
+    });
+  }
+
+  onDateChange(): void {
+    if (this.loan.date1 && this.loan.date2) {
+      const diffTime = Math.abs(this.loan.date2.getTime() - this.loan.date1.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      
+      if (diffDays > 14) {
+        alert('La diferencia entre las fechas no puede ser mayor a 14 días');
+        this.loan.date2 = new Date(this.loan.date1);
+        this.loan.date2.setDate(this.loan.date2.getDate() + 14);
+      }
+    }
+    
+    if (this.loan.date1) {
+      this.maxDate = new Date(this.loan.date1);
+      this.maxDate.setDate(this.maxDate.getDate() + 14);
+    }
   }
 
   onSave() {
-    this.loanService.saveLoan(this.loan).subscribe(()=>{
-      this.dialogRef.close();
-    });
-        const date1 = new Date(this.loan.date1);
-        const date2 = new Date(this.loan.date2);
-        const diffDays = Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
-    
-        if (diffDays > 14) {
-          alert('La diferencia entre las fechas no puede ser mayor a 14 días.');
-          return;
-        }
-    
-        // Aquí puedes agregar la lógica para guardar el préstamo
-        this.dialogRef.close();
+    if (this.validateDates()) {
+      this.loanService.saveLoan(this.loan).subscribe(() => {
+        this.dialogRef.close();
+      });
     }
-    onClose() {
-      this.dialogRef.close();
+  }
+
+  validateDates(): boolean {
+    if (!this.loan.date1 || !this.loan.date2) {
+      alert('Ambas fechas son requeridas');
+      return false;
     }
+
+    if (this.loan.date2 < this.loan.date1) {
+      alert('La fecha de fin no puede ser anterior a la fecha de inicio');
+      return false;
+    }
+
+    const diffTime = Math.abs(this.loan.date2.getTime() - this.loan.date1.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
+    if (diffDays > 14) {
+      alert('La diferencia entre las fechas no puede ser mayor a 14 días');
+      return false;
+    }
+
+    return true;
+  }
+
+  onClose() {
+    this.dialogRef.close();
+  }   
 
   
 
