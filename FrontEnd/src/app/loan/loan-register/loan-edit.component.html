@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 <div class="container">
     <h1>Crear préstamo</h1>
+=======
+<!-- <div class="container">
+>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d
 
     <form >
         <mat-form-field>
@@ -41,5 +45,68 @@
     <div class="buttons">
         <button mat-stroked-button (click)="onClose()">Cerrar</button>
         <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+    </div>
+</div> -->
+<div class="container">
+    <form #loanForm="ngForm">
+        <mat-form-field appearance="fill">
+            <mat-label>Identificador</mat-label>
+            <input type="text" matInput [(ngModel)]="loan.id" name="id" disabled>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cliente</mat-label>
+            <mat-select [(ngModel)]="loan.client" name="client" required>
+                <mat-option *ngFor="let client of clientNames" [value]="client">
+                    {{client}}
+                </mat-option>
+            </mat-select>
+            <mat-error>Debe seleccionar un cliente</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Juego</mat-label>
+            <mat-select [(ngModel)]="loan.name" name="name" required>
+                <mat-option *ngFor="let game of gameNames" [value]="game">
+                    {{game}}
+                </mat-option>
+            </mat-select>
+            <mat-error>Debe seleccionar un juego</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de inicio</mat-label>
+            <input matInput [matDatepicker]="picker1" 
+                   [(ngModel)]="loan.date1" 
+                   name="date1" 
+                   required
+                   (dateChange)="onDateChange()">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+            <mat-error>La fecha de inicio es requerida</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Fecha de fin</mat-label>
+            <input matInput [matDatepicker]="picker2" 
+                   [(ngModel)]="loan.date2" 
+                   name="date2" 
+                   required
+                   [min]="loan.date1"
+                   [max]="maxDate"
+                   (dateChange)="onDateChange()">
+            <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-error>La fecha de fin es requerida</mat-error>
+        </mat-form-field>
+    </form>
+
+    <div class="buttons">
+        <button mat-stroked-button (click)="onClose()">Cerrar</button>
+        <button mat-flat-button color="primary" 
+                [disabled]="!loanForm.form.valid"
+                (click)="onSave()">
+            Guardar
+        </button>
     </div>
 </div>

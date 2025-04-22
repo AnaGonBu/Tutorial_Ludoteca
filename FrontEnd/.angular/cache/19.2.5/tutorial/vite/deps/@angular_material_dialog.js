@@ -10,6 +10,7 @@ import {
   OverlayRef,
   PortalModule,
   TemplatePortal
+<<<<<<< HEAD
 } from "./chunk-O7UF562I.js";
 import "./chunk-SZS4RJEH.js";
 import "./chunk-X3P5GA7C.js";
@@ -19,6 +20,17 @@ import {
   CdkScrollable
 } from "./chunk-UA3SCB2Y.js";
 import "./chunk-65RJ5ZZ2.js";
+=======
+} from "./chunk-A7RKLTG5.js";
+import "./chunk-UDU42JBG.js";
+import {
+  CdkScrollable
+} from "./chunk-NLHQV35Z.js";
+import "./chunk-SZS4RJEH.js";
+import "./chunk-UU5Z7QKS.js";
+import "./chunk-LLV3XXMU.js";
+import "./chunk-TRU6FIAD.js";
+>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d
 import {
   A11yModule,
   ESCAPE,
@@ -29,6 +41,7 @@ import {
   _IdGenerator,
   _getFocusedElementPierceShadowDom,
   hasModifierKey
+<<<<<<< HEAD
 } from "./chunk-LBR6PWTZ.js";
 import "./chunk-42SAVLIU.js";
 import {
@@ -39,9 +52,21 @@ import "./chunk-M3HR6BUY.js";
 import {
   Directionality
 } from "./chunk-PNN2A3NM.js";
+=======
+} from "./chunk-FGX32Z2M.js";
+import "./chunk-M3HR6BUY.js";
+import "./chunk-5C4IP3J4.js";
+import {
+  Directionality
+} from "./chunk-IBFEB6ZO.js";
+import {
+  Platform,
+  coerceNumberProperty
+} from "./chunk-HF6ZTYXZ.js";
+>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d
 import {
   DOCUMENT
-} from "./chunk-VJE4L4UK.js";
+} from "./chunk-HYG5KV37.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -82,7 +107,7 @@ import {
   ɵɵqueryRefresh,
   ɵɵtemplate,
   ɵɵviewQuery
-} from "./chunk-5SLB7SFU.js";
+} from "./chunk-GYNNYFCE.js";
 import {
   Subject,
   __spreadProps,
@@ -93,7 +118,7 @@ import {
   of,
   startWith,
   take
-} from "./chunk-S35MAB2V.js";
+} from "./chunk-7PP4ZR3C.js";
 
 // node_modules/@angular/cdk/fesm2022/dialog.mjs
 function CdkDialogContainer_ng_template_0_Template(rf, ctx) {
