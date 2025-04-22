@@ -4,7 +4,7 @@ import {
   isFakeMousedownFromScreenReader,
   isFakeTouchstartFromScreenReader,
   normalizePassiveListenerOptions
-} from "./chunk-MJBGDVQM.js";
+} from "./chunk-LBR6PWTZ.js";
 import {
   _CdkPrivateStyleLoader
 } from "./chunk-42SAVLIU.js";
@@ -668,10 +668,12 @@ var MatRippleModule = class _MatRippleModule {
 
 export {
   _StructuralStylesLoader,
+  RippleState,
+  RippleRef,
   defaultRippleAnimationConfig,
   RippleRenderer,
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatRipple,
   MatRippleModule
 };
-//# sourceMappingURL=chunk-RPFWBJY2.js.map
+//# sourceMappingURL=chunk-6RVKN4NK.js.map

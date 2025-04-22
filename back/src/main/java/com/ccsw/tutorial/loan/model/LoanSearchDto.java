@@ -1,2 +1,4 @@
-package com.ccsw.tutorial.loan.model;public class LoanSearchDto {
+package com.ccsw.tutorial.loan.model;
+
+public class LoanSearchDto {
 }

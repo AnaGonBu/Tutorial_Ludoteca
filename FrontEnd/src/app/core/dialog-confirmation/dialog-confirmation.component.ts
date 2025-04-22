@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+
 @Component({
   selector: 'app-dialog-confirmation',
   imports: [MatButton,],
@@ -12,6 +13,7 @@ export class DialogConfirmationComponent {
 
   title: string;
   description: string;
+  GAME_DATA: string;
 
   constructor(
     public dialogRef :MatDialogRef<DialogConfirmationComponent>,

@@ -4,7 +4,7 @@ import com.ccsw.tutorial.author.model.AuthorDto;
 import com.ccsw.tutorial.category.model.CategoryDto;
 
 /**
- * @author ccsw
+ * @game ccsw
  *
  */
 public class GameDto {

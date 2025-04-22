@@ -4,6 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -15,7 +17,9 @@ import { HeaderComponent } from './header/header.component';
     RouterModule,
     MatIconModule, 
     MatToolbarModule,
-    HeaderComponent
+    HeaderComponent,
+    MatDatepickerModule,
+    MatNativeDateModule
   ], 
   
   exports: [

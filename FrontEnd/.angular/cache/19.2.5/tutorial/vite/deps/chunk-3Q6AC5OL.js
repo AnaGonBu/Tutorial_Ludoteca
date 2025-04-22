@@ -2,7 +2,7 @@ import {
   MatRipple,
   MatRippleModule,
   _StructuralStylesLoader
-} from "./chunk-RPFWBJY2.js";
+} from "./chunk-6RVKN4NK.js";
 import {
   ENTER,
   MatCommonModule,
@@ -10,7 +10,7 @@ import {
   _IdGenerator,
   _VisuallyHiddenLoader,
   hasModifierKey
-} from "./chunk-MJBGDVQM.js";
+} from "./chunk-LBR6PWTZ.js";
 import {
   _CdkPrivateStyleLoader
 } from "./chunk-42SAVLIU.js";
@@ -681,12 +681,15 @@ var MatOptionModule = class _MatOptionModule {
 })();
 
 export {
+  MatPseudoCheckbox,
   MAT_OPTION_PARENT_COMPONENT,
   MAT_OPTGROUP,
   MatOptgroup,
+  MatOptionSelectionChange,
   MatOption,
   _countGroupLabelsBeforeOption,
   _getOptionScrollPosition,
+  MatPseudoCheckboxModule,
   MatOptionModule
 };
-//# sourceMappingURL=chunk-M6RN3YOQ.js.map
+//# sourceMappingURL=chunk-3Q6AC5OL.js.map

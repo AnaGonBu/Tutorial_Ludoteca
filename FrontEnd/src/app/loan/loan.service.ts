@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { LoanPage } from './model/loanPage';
 import { LOAN_DATA } from './model/mock-loan';
 import { Loan } from './model/loan';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class LoanService {
   
   }
 
+ 
   
 
   getLoans(pageable: Pageable): Observable<LoanPage> {

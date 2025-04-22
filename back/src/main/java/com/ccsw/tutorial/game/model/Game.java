@@ -5,7 +5,7 @@ import com.ccsw.tutorial.category.model.Category;
 import jakarta.persistence.*;
 
 /**
- * @author ccsw
+ * @game ccsw
  *
  */
 @Entity
