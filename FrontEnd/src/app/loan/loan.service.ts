@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { CLIENT_DATA } from '../client/model/mock-clients';
 import { Pageable } from '../core/model/page/Pageable';
-import { GAME_DATA } from '../game/model/mock-games';
-import { Loan } from './model/loan';
+import { Observable, of } from 'rxjs';
 import { LoanPage } from './model/loanPage';
 import { LOAN_DATA } from './model/mock-loan';
+import { Loan } from './model/loan';
 import { DatePipe } from '@angular/common';
 
 @Injectable({
@@ -36,13 +34,17 @@ export class LoanService {
   deleteLoan(id: number): Observable<void> {
       return of(null);
   }
-  getClients(): Observable<string[]> {
-    return of(CLIENT_DATA.map(client => client.name));
-  }
-
-  getGames(): Observable<string[]> {
-    return of(GAME_DATA.map(game => game.title));
-  }
-   
+  // getClients(): string[] {
+  //   return this.arrLoan.array.forEach(element => {
+  //     this.clientsName.push(element.client);
+  //   return this.clientsName
+  //   });
+  // }   
+  // getGames(): string[] {
+  //   return this.arrLoan.array.forEach(element => {
+  //     this.games.push(element.name);
+  //   return this.games
+  //   });
+  // }   
 
 }

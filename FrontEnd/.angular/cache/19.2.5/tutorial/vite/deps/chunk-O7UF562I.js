@@ -1,18 +1,10 @@
 import {
-<<<<<<<< HEAD:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-O7UF562I.js
   coerceCssPixelValue
 } from "./chunk-X3P5GA7C.js";
-========
-  ScrollDispatcher,
-  ScrollingModule,
-  ViewportRuler
-} from "./chunk-NLHQV35Z.js";
->>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-A7RKLTG5.js
 import {
   _isTestEnvironment
 } from "./chunk-UU5Z7QKS.js";
 import {
-<<<<<<<< HEAD:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-O7UF562I.js
   ScrollDispatcher,
   ScrollingModule,
   ViewportRuler
@@ -20,35 +12,20 @@ import {
 import {
   supportsScrollBehavior
 } from "./chunk-65RJ5ZZ2.js";
-========
-  coerceCssPixelValue
-} from "./chunk-LLV3XXMU.js";
-import {
-  supportsScrollBehavior
-} from "./chunk-TRU6FIAD.js";
->>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-A7RKLTG5.js
 import {
   ESCAPE,
   _IdGenerator,
   _getEventTarget,
   coerceArray,
   hasModifierKey
-<<<<<<<< HEAD:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-O7UF562I.js
 } from "./chunk-LBR6PWTZ.js";
-========
-} from "./chunk-FGX32Z2M.js";
->>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-A7RKLTG5.js
 import {
   _CdkPrivateStyleLoader,
   _bindEventWithOptions
-} from "./chunk-5C4IP3J4.js";
-import {
-  BidiModule,
-  Directionality
-} from "./chunk-IBFEB6ZO.js";
+} from "./chunk-42SAVLIU.js";
 import {
   Platform
-} from "./chunk-HF6ZTYXZ.js";
+} from "./chunk-DWB4KXJV.js";
 import {
   BidiModule,
   Directionality
@@ -56,7 +33,7 @@ import {
 import {
   DOCUMENT,
   Location
-} from "./chunk-HYG5KV37.js";
+} from "./chunk-VJE4L4UK.js";
 import {
   ANIMATION_MODULE_TYPE,
   ApplicationRef,
@@ -94,7 +71,7 @@ import {
   ɵɵdefineInjector,
   ɵɵdefineNgModule,
   ɵɵgetInheritedFactory
-} from "./chunk-GYNNYFCE.js";
+} from "./chunk-5SLB7SFU.js";
 import {
   Subject,
   Subscription,
@@ -104,7 +81,7 @@ import {
   merge,
   takeUntil,
   takeWhile
-} from "./chunk-7PP4ZR3C.js";
+} from "./chunk-S35MAB2V.js";
 
 // node_modules/@angular/cdk/fesm2022/portal-directives-6dd242f4.mjs
 function throwNullPortalError() {
@@ -3481,8 +3458,4 @@ export {
   CdkConnectedOverlay,
   OverlayModule
 };
-<<<<<<<< HEAD:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-O7UF562I.js
 //# sourceMappingURL=chunk-O7UF562I.js.map
-========
-//# sourceMappingURL=chunk-A7RKLTG5.js.map
->>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-A7RKLTG5.js

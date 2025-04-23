@@ -1,6 +1,5 @@
 import {
   MatRippleLoader
-<<<<<<<< HEAD:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-ZEK2NA66.js
 } from "./chunk-5FA3FZOF.js";
 import {
   MatRippleModule,
@@ -13,20 +12,6 @@ import {
 import {
   _CdkPrivateStyleLoader
 } from "./chunk-42SAVLIU.js";
-========
-} from "./chunk-H2E3LV4I.js";
-import {
-  MatRippleModule,
-  _StructuralStylesLoader
-} from "./chunk-AAWB3FAX.js";
-import {
-  FocusMonitor,
-  MatCommonModule
-} from "./chunk-FGX32Z2M.js";
-import {
-  _CdkPrivateStyleLoader
-} from "./chunk-5C4IP3J4.js";
->>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-MRYHTPVL.js
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -57,15 +42,11 @@ import {
   ɵɵgetInheritedFactory,
   ɵɵprojection,
   ɵɵprojectionDef
-} from "./chunk-GYNNYFCE.js";
+} from "./chunk-5SLB7SFU.js";
 import {
   __spreadProps,
   __spreadValues
-<<<<<<<< HEAD:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-ZEK2NA66.js
 } from "./chunk-S35MAB2V.js";
-========
-} from "./chunk-7PP4ZR3C.js";
->>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-MRYHTPVL.js
 
 // node_modules/@angular/material/fesm2022/icon-button-655c4ed3.mjs
 var _c0 = ["mat-icon-button", ""];
@@ -1054,8 +1035,4 @@ export {
   MatMiniFabAnchor,
   MatButtonModule
 };
-<<<<<<<< HEAD:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-ZEK2NA66.js
 //# sourceMappingURL=chunk-ZEK2NA66.js.map
-========
-//# sourceMappingURL=chunk-MRYHTPVL.js.map
->>>>>>>> c11e36e327fc8c4cbd990fea75c6804fdac28f5d:FrontEnd/.angular/cache/19.2.5/tutorial/vite/deps/chunk-MRYHTPVL.js
