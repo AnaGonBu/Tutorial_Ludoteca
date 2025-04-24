@@ -2,8 +2,10 @@ package com.ccsw.tutorial.category;
 
 import com.ccsw.tutorial.category.model.Category;
 import com.ccsw.tutorial.category.model.CategoryDto;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,16 +53,33 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository.save(category);
     }
 
+    @Override
+    public void delete(Long id) throws Exception {
+        if (this.categoryRepository.findById(id).orElse(null) == null) {
+            throw new EntityNotFoundException("Not exists category " + id);
+        }
+        try {
+            this.categoryRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new Exception("No se puede eliminar la categoria, tiene juegos asociados");
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
-    @Override
+ /*   @Override
     public void delete(Long id) throws Exception {
 
         if (this.categoryRepository.findById(id).orElse(null) == null) {
-            throw new Exception("Not exists");
+            throw new EntityNotFoundException("Not exists category" + id);
+        }
+        try {
+            this.categoryRepository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+            throw new Exception("No se puede eliminar la categoria, tiene juegos asociados");
         }
 
         this.categoryRepository.deleteById(id);
-    }
+    }*/
 }

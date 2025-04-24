@@ -1,5 +1,9 @@
 package com.ccsw.tutorial.category.model;
 
+/**
+ * @author ccsw
+ *
+ */
 public class CategoryDto {
 
     private Long id;

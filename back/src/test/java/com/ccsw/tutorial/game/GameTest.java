@@ -1,2 +1,4 @@
-package com.ccsw.tutorial.game;public class GameTest {
+package com.ccsw.tutorial.game;
+
+public class GameTest {
 }

@@ -1,5 +1,9 @@
 package com.ccsw.tutorial.author.model;
 
+/**
+ * @author ccsw
+ *
+ */
 public class AuthorDto {
 
     private Long id;

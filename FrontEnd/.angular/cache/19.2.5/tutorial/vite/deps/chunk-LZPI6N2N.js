@@ -1,4 +1,7 @@
 import {
+  BidiModule
+} from "./chunk-PNN2A3NM.js";
+import {
   _CdkPrivateStyleLoader,
   _bindEventWithOptions
 } from "./chunk-42SAVLIU.js";
@@ -7,9 +10,6 @@ import {
   coerceElement,
   coerceNumberProperty
 } from "./chunk-DWB4KXJV.js";
-import {
-  BidiModule
-} from "./chunk-PNN2A3NM.js";
 import {
   DOCUMENT
 } from "./chunk-VJE4L4UK.js";
@@ -3135,6 +3135,7 @@ export {
   CdkMonitorFocus,
   _VisuallyHiddenLoader,
   coerceArray,
+  BreakpointObserver,
   ObserversModule,
   InteractivityChecker,
   FocusTrapFactory,
@@ -3150,4 +3151,4 @@ export {
   MATERIAL_SANITY_CHECKS,
   MatCommonModule
 };
-//# sourceMappingURL=chunk-LBR6PWTZ.js.map
+//# sourceMappingURL=chunk-LZPI6N2N.js.map

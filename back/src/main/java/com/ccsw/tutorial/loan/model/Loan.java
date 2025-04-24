@@ -18,11 +18,11 @@ public class Loan implements Serializable {
 
     @OneToOne
     @JoinColumn(name = "game_id", nullable = false)
-    private Game gameName;
+    private Game game;
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    private Client clientName;
+    private Client client;
 
     @Column(name = "date1")
     private Date date1;
@@ -35,38 +35,47 @@ public class Loan implements Serializable {
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
-    public Game getGameName() {
-        return gameName;
+    public Game getGame() {
+
+        return game;
     }
 
-    public void setGameName(Game gameName) {
-        this.gameName = gameName;
+    public void setGame(Game game) {
+
+        this.game = game;
     }
 
-    public Client getClientName() {
-        return clientName;
+    public Client getClient() {
+
+        return client;
     }
 
-    public void setClientName(Client clientName) {
-        this.clientName = clientName;
+    public void setClient(Client client) {
+
+        this.client = client;
     }
 
     public Date getDate1() {
+
         return date1;
     }
 
     public void setDate1(Date date1) {
+
         this.date1 = date1;
     }
 
     public Date getDate2() {
+
         return date2;
     }
 
     public void setDate2(Date date2) {
+
         this.date2 = date2;
     }
 }
