@@ -23,10 +23,15 @@ export class LoanService {
 
 private baseUrl = 'http://localhost:8080/loan';
 
-getLoans(): Observable<Loan[]> {
-    this.arrLoans = this.http.get<Loan[]>(this.baseUrl);
-    return this.arrLoans;
-}
+getLoans(pageable: Pageable): Observable<LoanPage>{
+
+    return this.http.post<LoanPage>(this.baseUrl, {pageable : pageable});
+  }
+
+// getAllLoans(): Observable<Loan[]> {
+//     this.arrLoans = this.http.get<Loan[]>(this.baseUrl);
+//     return this.arrLoans;
+// }
 
 saveLoan(loan: Loan): Observable<Loan> {
     if (loan.id) {

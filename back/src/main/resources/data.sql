@@ -31,4 +31,5 @@ INSERT INTO loan(game_id, client_id, date1, date2) VALUES (2,2,'2025-01-06', '20
 INSERT INTO loan(game_id, client_id, date1, date2) VALUES (3,1,'2025-01-07', '2025-01-17');
 INSERT INTO loan(game_id, client_id, date1, date2) VALUES (4,3,'2025-01-06', '2025-01-16');
 INSERT INTO loan(game_id, client_id, date1, date2) VALUES (5,6,'2025-01-06', '2025-01-16');
+INSERT INTO loan(game_id, client_id, date1, date2) VALUES (6,7,'2025-01-06', '2025-01-16');
 

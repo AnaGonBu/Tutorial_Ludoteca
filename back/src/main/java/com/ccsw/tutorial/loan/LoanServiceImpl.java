@@ -2,6 +2,7 @@ package com.ccsw.tutorial.loan;
 
 import com.ccsw.tutorial.loan.model.Loan;
 import com.ccsw.tutorial.loan.model.LoanDto;
+import com.ccsw.tutorial.loan.model.LoanSearchDto;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,15 @@ public class LoanServiceImpl implements LoanService {
 
     @Autowired
     private LoanRepository loanRepo;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Page<Loan> findPage(LoanSearchDto dto) {
+
+        return this.loanRepo.findAll(dto.getPageable().getPageable());
+    }
 
     @Override
     public List<Loan> getAll() {

@@ -25,7 +25,7 @@ export class LoanListComponent implements OnInit {
 
   pageNumber: number = 0;
   pageSize: number = 5;
-  totalElements: number = 0;
+  totalElements: number = 10;
 
 // pageNumber: number = 0;
 // pageSizeOptions : number []= [5,10,15]
