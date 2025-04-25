@@ -31,8 +31,6 @@ public interface LoanService {
      */
     Loan get(Long id);
 
-    Page<Loan> findPage(LoanDto loan);
-
     /**
      * Método para crear  un préstamo
      *

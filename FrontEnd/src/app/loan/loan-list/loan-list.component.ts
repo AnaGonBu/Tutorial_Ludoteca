@@ -59,7 +59,16 @@ loadPage(event?: PageEvent){
   }
 
   this.loanService.getLoans(pageable).subscribe((data)=>{
-      this.dataSource.data = data.content;
+      this.dataSource.data = data.content.map(loanDto => {
+        return{
+          id:loanDto.id,
+          game:loanDto.game,
+          client:loanDto.client,
+          date1:loanDto.date1,
+          date2: loanDto.date2
+
+        };
+      });
       this.pageNumber = data.pageable.pageNumber;
       this.pageSize = data.pageable.pageSize;
       this.totalElements = data.totalElements;
@@ -69,7 +78,7 @@ loadPage(event?: PageEvent){
 deleteLoan(loan: Loan) {
   const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: {
-          title: `¿Desea eliminar a ${loan.name}?`,
+          title: `¿Desea eliminar a ${loan.game}?`,
           description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
 
       },

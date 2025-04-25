@@ -26,7 +26,7 @@ public class LoanServiceImpl implements LoanService {
      */
     @Override
     public Page<Loan> findPage(LoanSearchDto dto) {
-        System.out.println(dto.getPageable());
+
         return this.loanRepo.findAll(dto.getPageable().getPageable());
     }
 
@@ -38,11 +38,6 @@ public class LoanServiceImpl implements LoanService {
     @Override
     public Loan get(Long id) {
         return loanRepo.findById(id).orElse(null);
-    }
-
-    @Override
-    public Page<Loan> findPage(LoanDto loan) {
-        return null;
     }
 
     @Override
