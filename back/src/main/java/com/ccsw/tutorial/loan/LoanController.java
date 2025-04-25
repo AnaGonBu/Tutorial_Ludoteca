@@ -44,8 +44,8 @@ public class LoanController {
     public Page<LoanDto> findPage(@RequestBody LoanSearchDto dto) {
 
         Page<Loan> page = this.loanService.findPage(dto);
-
         return new PageImpl<>(page.getContent().stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList()), page.getPageable(), page.getTotalElements());
+
     }
 
     /**

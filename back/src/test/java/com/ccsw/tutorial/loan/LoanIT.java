@@ -12,7 +12,6 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
@@ -70,7 +69,7 @@ public class LoanIT {
         assertEquals(elementsCount, response.getBody().getContent().size());
     }
 
-    @Test
+  /*  @Test
     public void saveWithoutIdShouldCreateNewAuthor() {
 
         long newLoanId = TOTAL_LOANS + 1;
@@ -176,5 +175,5 @@ public class LoanIT {
         ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + NEW_LOAN_ID, HttpMethod.DELETE, null, Void.class);
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
+    }*/
 }

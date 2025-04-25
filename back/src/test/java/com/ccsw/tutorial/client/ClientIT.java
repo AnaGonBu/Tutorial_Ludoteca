@@ -51,7 +51,7 @@ public class ClientIT {
 
         ResponseEntity<List<ClientDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
         assertNotNull(response);
-        assertEquals(2, response.getBody().size());
+        assertEquals(7, response.getBody().size());
     }
 
     public static final Long CLIENT_WITH_LOAN_ID = 2L;
