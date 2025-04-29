@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -29,18 +30,18 @@ public class LoanController {
     @Autowired
     private ModelMapper mapper;
 
-    private LoanDto mapToDto(Loan loan) {
-        LoanDto dto = new LoanDto();
-        dto.setId(loan.getId());
-        dto.setDate1(loan.getDate1());
-        dto.setDate2(loan.getDate2());
-        if (loan.getClient() != null) {
-            dto.setClient(loan.getClient().getName());
-        }
-        if (loan.getGame() != null) {
-            dto.setGame(loan.getGame().getTitle());
-        }
-        return dto;
+    /**
+     * Recupera el listado de autores {@link Loan}
+     *
+     * @return {@link List} de {@link LoanDto}
+     */
+    @Operation(summary = "Find", description = "Method that return a list of Authors")
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<LoanDto> findAll() {
+
+        List<Loan> loans = this.loanService.getAll();
+
+        return loans.stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
     }
 
     /**
@@ -51,34 +52,42 @@ public class LoanController {
      */
     @Operation(summary = "Find Page", description = "Method that return a page of Loans")
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public Page<LoanDto> findPage(@RequestBody LoanSearchDto dto) {
-        Page<Loan> page = this.loanService.findPage(dto);
-        return new PageImpl<>(page.getContent().stream().map(this::mapToDto).collect(Collectors.toList()), page.getPageable(), page.getTotalElements());
 
+    public Page<LoanDto> findPage(@RequestBody LoanSearchDto dto) {
+
+        Page<Loan> page = this.loanService.findPage(dto);
+
+        return new PageImpl<>(page.getContent().stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList()), page.getPageable(), page.getTotalElements());
     }
 
     /**
-     * Método para crear o actualizar un préstamo
+     * Método para recuperar una lista de {@link Loan}
      *
-     * @param id PK de la entidad
-     * @param dto datos de la entidad
+     * @param title título del juego
+     * @param  name del cliente
+     * @return {@link List} de {@link LoanDto}
      */
- /*   @Operation(summary = "Save or Update", description = "Method that saves or updates a Category")
+    @Operation(summary = "Find", description = "Method that return a filtered list of Loans")
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<LoanDto> find(@RequestParam(value = "game", required = false) String title, @RequestParam(value = "client", required = false) String name) {
+
+        List<Loan> games = loanService.find(title, name);
+
+        return games.stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
+    }
+
+    /**
+     * Método para crear o actualizar un {@link Loan}
+     *
+     * @param dto LoanDto
+     */
+    @Operation(summary = "Save or Update", description = "Method that saves or updates a Game")
     @RequestMapping(path = { "", "/{id}" }, method = RequestMethod.PUT)
     public void save(@PathVariable(name = "id", required = false) Long id, @RequestBody LoanDto dto) {
 
-        LoanDto loan;
+        loanService.save(id, dto);
 
-        if (id == null) {
-            loan = new LoanDto();
-            loan.setId(this.SEQUENCE++);
-            this.loans.put(loan.getId(), loan);
-        } else {
-            loan = this.categories.get(id);
-        }
-
-        loan.setName(dto.getName());
-    }*/
+    }
 
     /**
      * Método para borrar una categoria

@@ -29,6 +29,11 @@ public class GameServiceImpl implements GameService {
     @Autowired
     CategoryService categoryService;
 
+    @Override
+    public Game get(String title) {
+        return this.gameRepository.findByTitle(title);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -49,7 +54,7 @@ public class GameServiceImpl implements GameService {
     @Override
     public void save(Long id, GameDto dto) {
 
-        Game game;
+        Game game = new Game();
 
         if (id == null) {
             game = new Game();

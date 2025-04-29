@@ -1,5 +1,33 @@
 <div class="container">
     <h1>Listado de Préstamos</h1>
+    <div class="filters">
+        <form>
+            <mat-form-field>
+                <mat-label>Título del juego</mat-label>
+                <input
+                    type="text"
+                    matInput
+                    placeholder="Título del juego"
+                    [(ngModel)]="filterTitle"
+                    name="game"
+                />
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Cliente</mat-label>
+                <mat-select disableRipple [(ngModel)]="filterClient" name="client">
+                    @for (loan of dataSource.data; track loan.id) {
+                        <mat-option [value]="client">{{ loan.client.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </form>
+
+        <div class="buttons">
+            <button mat-stroked-button class="black-button" (click)="onCleanFilter()">Limpiar</button>
+            <button mat-stroked-button class="black-button" (click)="onSearch()">Filtrar</button>
+        </div>
+    </div>
     <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="id">
             <mat-header-cell *matHeaderCellDef> Identificador </mat-header-cell>
@@ -8,12 +36,12 @@
 
         <ng-container matColumnDef="game">
             <mat-header-cell *matHeaderCellDef> Nombre del Juego  </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.game}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.game.title}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="client">
             <mat-header-cell *matHeaderCellDef> Nombre del Cliente  </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.client}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.client.name}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="date1">

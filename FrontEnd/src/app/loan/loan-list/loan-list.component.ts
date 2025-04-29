@@ -10,6 +10,12 @@ import { LoanService } from '../loan.service';
 import { Loan } from '../model/loan';
 import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
 import { LoanEditComponent } from '../loan-register/loan-edit.component';
+import { FormsModule } from '@angular/forms';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { Game } from '../../game/model/Game';
+import { Client } from '../../client/model/Client';
 
 @Component({
   selector: 'app-loan-list',
@@ -17,20 +23,38 @@ import { LoanEditComponent } from '../loan-register/loan-edit.component';
             MatButtonModule,
             MatIconModule, 
             MatTableModule,
-            MatPaginator,],
+            MatPaginator,
+            FormsModule,
+            MatFormFieldModule,
+            MatInputModule,
+            MatSelectModule],
   templateUrl: './loan-list.component.html',
   styleUrl: './loan-list.component.scss'
 })
 export class LoanListComponent implements OnInit {
+filterTitle: String;
+filterClient: Client;
+
+
+onSearch():void {
+const game =this.filterTitle;
+const client = this.filterClient !=null ? this.filterClient.name: null;
+
+this.loanService.getClients(client)
+this.loanService.getGames(game)
+
+}
+onCleanFilter(): void {
+this.filterClient =null;
+this.filterTitle = null;
+this.onSearch();
+}
 
   pageNumber: number = 0;
   pageSize: number = 5;
   totalElements: number = 10;
 
-// pageNumber: number = 0;
-// pageSizeOptions : number []= [5,10,15]
-// pageSize: number = this.pageSizeOptions[0];
-// totalElements: number = 0;
+
 
 
 displayedColumns: string[] = ['id', 'game', 'client', 'date1', 'date2'];

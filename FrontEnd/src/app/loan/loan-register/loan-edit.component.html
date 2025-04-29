@@ -7,11 +7,11 @@
             <input type="text" matInput placeholder={{loan.id}} [(ngModel)]="loan.id" name="id" disabled>
         </mat-form-field>
         <mat-form-field>
-            <input type="text" matInput placeholder="Nombre del cliente" [(ngModel)]="loan.client" name="client" required>
+            <input type="text" matInput placeholder="Nombre del cliente" [(ngModel)]="loan.client.name" name="client" required>
             <mat-error>El nombre no puede estar vacío</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type="text" matInput placeholder="Nombre del juego" [(ngModel)]="loan.name" name="name" required>
+            <input type="text" matInput placeholder="Nombre del juego" [(ngModel)]="loan.game.title" name="name" required>
             <mat-error>El nombre no puede estar vacío</mat-error>
         </mat-form-field>
         <!-- <mat-form-field>

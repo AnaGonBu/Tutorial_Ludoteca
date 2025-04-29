@@ -1,5 +1,25 @@
 .container {
     margin: 20px;
+    .filters {
+        display: flex;
+
+        mat-form-field {
+            width: 300px;
+            padding: 5px;
+        }
+
+        .buttons {
+            flex: auto;
+            align-self: center;
+
+            button {
+                margin-left: 15px;
+            }
+        }
+    }
+    .black-button {
+        background-color: black;
+      }
 
     mat-table {
         margin-top: 10px;

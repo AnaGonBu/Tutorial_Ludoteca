@@ -1,5 +1,8 @@
 package com.ccsw.tutorial.loan.model;
 
+import com.ccsw.tutorial.client.model.ClientDto;
+import com.ccsw.tutorial.game.model.GameDto;
+
 import java.util.Date;
 
 /**
@@ -9,8 +12,8 @@ import java.util.Date;
 public class LoanDto {
 
     private Long id;
-    private String game;
-    private String client;
+    private GameDto game;
+    private ClientDto client;
     private Date date1;
     private Date date2;
 
@@ -32,14 +35,14 @@ public class LoanDto {
     /**
      * @return game
      */
-    public String getGame() {
+    public GameDto getGame() {
         return game;
     }
 
     /**
      * @param game new value of {@link #getGame}.
      */
-    public void setGame(String game) {
+    public void setGame(GameDto game) {
 
         this.game = game;
     }
@@ -47,7 +50,7 @@ public class LoanDto {
     /**
      * @return client
      */
-    public String getClient() {
+    public ClientDto getClient() {
 
         return client;
     }
@@ -55,7 +58,7 @@ public class LoanDto {
     /**
      * @param client new value of {@link #getClient}.
      */
-    public void setClient(String client) {
+    public void setClient(ClientDto client) {
 
         this.client = client;
     }

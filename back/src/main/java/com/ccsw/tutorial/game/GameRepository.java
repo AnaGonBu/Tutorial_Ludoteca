@@ -18,4 +18,5 @@ public interface GameRepository extends CrudRepository<Game, Long>, JpaSpecifica
     @EntityGraph(attributePaths = { "category", "author" })
     List<Game> findAll(Specification<Game> spec);
 
+    Game findByTitle(String title);
 }

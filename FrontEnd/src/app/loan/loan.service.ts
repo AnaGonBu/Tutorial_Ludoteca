@@ -2,18 +2,26 @@ import { Injectable } from '@angular/core';
 import { Pageable } from '../core/model/page/Pageable';
 import { Observable, of } from 'rxjs';
 import { LoanPage } from './model/loanPage';
-import { LOAN_DATA } from './model/mock-loan';
+//import { LOAN_DATA } from './model/mock-loan';
 import { Loan } from './model/loan';
 import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Game } from '../game/model/Game';
+import { Client } from '../client/model/Client';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoanService {
+  getClients(client) {
+    throw new Error('Method not implemented.');
+  }
+  getGames(game): any {
+    throw new Error('Method not implemented.');
+  }
 
-  private games : string[]
-  private clientsName: string []
+  private games : Game[]
+  private clientsName: Client[]
   private arrLoans 
  
 

@@ -5,6 +5,7 @@ import com.ccsw.tutorial.loan.model.LoanDto;
 import com.ccsw.tutorial.loan.model.LoanSearchDto;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -41,17 +42,30 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public Loan save(LoanDto loan) {
-        return null;
-    }
+    public Loan save(Long id, LoanDto loanDto) {
 
-    @Override
-    public Loan save2(Long id, LoanDto loan) {
-        return null;
+        Loan loan;
+
+        if (id == null) {
+            loan = new Loan();
+        } else {
+            loan = this.loanRepo.findById(id).orElse(null);
+        }
+
+        BeanUtils.copyProperties(loanDto, loan, "id");
+
+        return this.loanRepo.save(loan);
     }
 
     @Override
     public int delete(Long id) throws Exception {
         return 0;
     }
+
+    @Override
+    public List<Loan> find(String title, String name) {
+        return (List<Loan>) this.loanRepo.findAll();
+    }
 }
+
+

@@ -32,23 +32,27 @@ public interface LoanService {
     Loan get(Long id);
 
     /**
-     * Método para crear  un préstamo
+     * Método para crear  o modificar un préstamo
      *
      * @param dto datos de la entidad
+     * @param id datos de la entidad
      */
-    Loan save(LoanDto dto);
+    Loan save(Long id, LoanDto dto);
 
     /**
      * Método para modificar  un préstamo
      *
      * @param id y dto datos de la entidad
      */
-    Loan save2(Long id, LoanDto dto);
+
+    int delete(Long id) throws Exception;
 
     /**
-     * Método para eliminar  un préstamo
+     * Recupera los préstamos filtrando opcionalmente por cliente y/o juego
      *
-     * @param id y dto datos de la entidad
+     * @param title título del juego
+     * @param name nombre del cliente
+     * @return {@link List} de {@link Loan}
      */
-    int delete(Long id) throws Exception;
+    List<Loan> find(String title, String name);
 }
