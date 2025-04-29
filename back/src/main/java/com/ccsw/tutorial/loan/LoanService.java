@@ -8,6 +8,11 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface LoanService {
+
+    List<Loan> getFilterClients(Long idClient);
+
+    List<Loan> getFilterGames(Long idGame);
+
     /**
      * Método para recuperar un listado paginado de {@link Loan}
      *

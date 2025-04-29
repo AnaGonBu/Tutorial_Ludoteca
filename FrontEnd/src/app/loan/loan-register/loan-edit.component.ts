@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Loan } from '../model/loan';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -18,11 +18,12 @@ import { GameService } from '../../game/game.service';
 
 @Component({
   selector: 'app-loan-edit',
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule],
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule,MatError,MatLabel],
   templateUrl: './loan-edit.component.html',
   styleUrl: './loan-edit.component.scss'
 })
-export class LoanEditComponent implements OnInit {
+export class LoanEditComponent //implements OnInit 
+{
 
   loan: Loan;
   clients: Client[];
@@ -39,39 +40,39 @@ export class LoanEditComponent implements OnInit {
 
 ) {}
 
-  ngOnInit(): void {
-    // this.loan = new Loan()
-    this.loan = this.data.loan ? Object.assign({}, this.data.loan) : new Loan();
-    // this.clientNames=this.loanService.getClients()
-    // this.gameTitles=this.loanService.getGames()
+  // ngOnInit(): void {
+  //   // this.loan = new Loan()
+  //   this.loan = this.data.loan ? Object.assign({}, this.data.loan) : new Loan();
+  //   // this.clientNames=this.loanService.getClients()
+  //   // this.gameTitles=this.loanService.getGames()
    
   
-        this.clientService.getClients.subscribe((clients) => {
-            this.clients = clients;
+  //       this.clientService.getClients.subscribe((clients) => {
+  //           this.clients = clients;
   
-            if (this.loan.client != null) {
-                const clientFilter: Client[] = clients.filter(
-                    (client) => client.id == this.data.loan.client.id
-                );
-                if (clientFilter != null) {
-                    this.loan.client = clientFilter[0];
-                }
-            }
-        });
+  //           if (this.loan.client != null) {
+  //               const clientFilter: Client[] = clients.filter(
+  //                   (client) => client.id == this.data.loan.client.id
+  //               );
+  //               if (clientFilter != null) {
+  //                   this.loan.client = clientFilter[0];
+  //               }
+  //           }
+  //       });
   
-        this.gameService.getGames.subscribe((games) => {
-            this.games = games;
+  //       this.gameService.getGames.subscribe((games) => {
+  //           this.games = games;
   
-            if (this.loan.game != null) {
-                const gameFilter: Game[] = games.filter(
-                    (game) => game.id == this.data.game.id
-                );
-                if (gameFilter != null) {
-                    this.loan.game = gameFilter[0];
-                }
-            }
-        });
-    }
+  //           if (this.loan.game != null) {
+  //               const gameFilter: Game[] = games.filter(
+  //                   (game) => game.id == this.data.game.id
+  //               );
+  //               if (gameFilter != null) {
+  //                   this.loan.game = gameFilter[0];
+  //               }
+  //           }
+  //       });
+  //   }
 
   onSave() {
     this.loanService.saveLoan(this.loan).subscribe(()=>{

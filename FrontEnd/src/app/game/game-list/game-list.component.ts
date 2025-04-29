@@ -30,7 +30,7 @@ import { GameItemComponent } from './game-item/game-item.component';
   styleUrl: './game-list.component.scss'
 })
 export class GameListComponent {
-  categories: Category[];
+    categories: Category[];
     games: Game[];
     filterCategory: Category;
     filterTitle: string;

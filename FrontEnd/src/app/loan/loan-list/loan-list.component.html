@@ -3,21 +3,19 @@
     <div class="filters">
         <form>
             <mat-form-field>
-                <mat-label>Título del juego</mat-label>
-                <input
-                    type="text"
-                    matInput
-                    placeholder="Título del juego"
-                    [(ngModel)]="filterTitle"
-                    name="game"
-                />
+                <mat-label>Juego</mat-label>
+                <mat-select disableRipple [(ngModel)]="filterTitle" name="game">
+                    @for (game of games; track game.id) {
+                        <mat-option [value]="game">{{ game.title}}</mat-option>
+                    }
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Cliente</mat-label>
                 <mat-select disableRipple [(ngModel)]="filterClient" name="client">
-                    @for (loan of dataSource.data; track loan.id) {
-                        <mat-option [value]="client">{{ loan.client.name}}</mat-option>
+                    @for (client of clientes; track client.id) {
+                        <mat-option [value]="client">{{ client.name}}</mat-option>
                     }
                 </mat-select>
             </mat-form-field>

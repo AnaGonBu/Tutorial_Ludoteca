@@ -22,13 +22,23 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     private ModelMapper mapper;
 
+    @Override
+    public List<Loan> getFilterClients(Long idClient) {
+        return this.loanRepo.findByClient(idClient);
+    }
+
+    @Override
+    public List<Loan> getFilterGames(Long idGame) {
+        return this.loanRepo.findByClient(idGame);
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public Page<Loan> findPage(LoanSearchDto dto) {
 
-        return this.loanRepo.findAll(dto.getPageable().getPageable());
+        return loanRepo.findAll(dto.getPageable().getPageable());
     }
 
     @Override
@@ -64,6 +74,7 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<Loan> find(String title, String name) {
+
         return (List<Loan>) this.loanRepo.findAll();
     }
 }

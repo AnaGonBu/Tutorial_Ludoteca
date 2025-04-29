@@ -11,11 +11,13 @@ import { Loan } from '../model/loan';
 import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
 import { LoanEditComponent } from '../loan-register/loan-edit.component';
 import { FormsModule } from '@angular/forms';
-import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Game } from '../../game/model/Game';
 import { Client } from '../../client/model/Client';
+import { ClientService } from '../../client/client.service';
+import { GameService } from '../../game/game.service';
 
 @Component({
   selector: 'app-loan-list',
@@ -32,16 +34,19 @@ import { Client } from '../../client/model/Client';
   styleUrl: './loan-list.component.scss'
 })
 export class LoanListComponent implements OnInit {
-filterTitle: String;
+filterTitle: Game;
 filterClient: Client;
+clientes : Client[]
+games : Game[]
+
 
 
 onSearch():void {
 const game =this.filterTitle;
 const client = this.filterClient !=null ? this.filterClient.name: null;
 
-this.loanService.getClients(client)
-this.loanService.getGames(game)
+// this.loanService.getClients(client)
+// this.loanService.getGames(game)
 
 }
 onCleanFilter(): void {
@@ -60,10 +65,13 @@ this.onSearch();
 displayedColumns: string[] = ['id', 'game', 'client', 'date1', 'date2'];
 dataSource = new MatTableDataSource<Loan>();
 
-constructor (private loanService: LoanService, public dialog: MatDialog){}
+constructor (private loanService: LoanService, public dialog: MatDialog, private clientsService : ClientService, private gameService: GameService){}
 
 ngOnInit(): void {
   this.loadPage();
+  this.clientsService.getClients().subscribe(clients => this.clientes = clients);
+  this.gameService.getGames().subscribe(games => this.games = games);
+  
 }
 
 loadPage(event?: PageEvent){

@@ -13,16 +13,16 @@ import { Client } from '../client/model/Client';
   providedIn: 'root'
 })
 export class LoanService {
-  getClients(client) {
-    throw new Error('Method not implemented.');
-  }
-  getGames(game): any {
-    throw new Error('Method not implemented.');
-  }
+  // getClients(client) {
+  //   throw new Error('Method not implemented.');
+  // }
+  // getGames(game): any {
+  //   throw new Error('Method not implemented.');
+  // }
 
-  private games : Game[]
-  private clientsName: Client[]
-  private arrLoans 
+  // private games : Game[]
+  // private clientsName: Client[]
+  // private arrLoans 
  
 
   constructor(
@@ -31,15 +31,16 @@ export class LoanService {
 
 private baseUrl = 'http://localhost:8080/loan';
 
-getLoans(pageable: Pageable): Observable<LoanPage>{
 
-    return this.http.post<LoanPage>(this.baseUrl, {pageable : pageable});
-  }
+getLoans(pageable: Pageable, game?: string, client?: string): Observable<LoanPage> {
+  const body = {
+  pageable: pageable,
+  game: game,
+  client: client
+  };
+  return this.http.post<LoanPage>(this.baseUrl, body); 
+}
 
-// getAllLoans(): Observable<Loan[]> {
-//     this.arrLoans = this.http.get<Loan[]>(this.baseUrl);
-//     return this.arrLoans;
-// }
 
 saveLoan(loan: Loan): Observable<Loan> {
     if (loan.id) {
@@ -51,40 +52,6 @@ saveLoan(loan: Loan): Observable<Loan> {
 
 deleteLoan(idLoan : number): Observable<any> {
   return this.http.delete(`${this.baseUrl}/${idLoan}`);
-}  
-
-
-
-  // private arrLoan = LOAN_DATA
-  // constructor(
-  // ) { 
-  //   this.games = []
-  //   this.clientsName =[]
-  
-  // }
-
-  // getLoans(pageable: Pageable): Observable<LoanPage> {
-  //     return of(LOAN_DATA);
-  // }
-
-  // saveLoan(loan: Loan): Observable<void> {
-  //     return of(null);
-  // }
-
-  // deleteLoan(id: number): Observable<void> {
-  //     return of(null);
-  // }
-  // getClients(): string[] {
-  //   return this.arrLoan.array.forEach(element => {
-  //     this.clientsName.push(element.client);
-  //   return this.clientsName
-  //   });
-  // }   
-  // getGames(): string[] {
-  //   return this.arrLoan.array.forEach(element => {
-  //     this.games.push(element.name);
-  //   return this.games
-  //   });
-  // }   
+}   
 
 }
