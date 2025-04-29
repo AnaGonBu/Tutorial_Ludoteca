@@ -13,6 +13,8 @@ import { CLIENT_DATA } from '../../client/model/mock-clients';
 import { GAME_DATA } from '../../game/model/mock-games';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ClientService } from '../../client/client.service';
+import { GameService } from '../../game/game.service';
 
 @Component({
   selector: 'app-loan-edit',
@@ -23,17 +25,18 @@ import { MatNativeDateModule } from '@angular/material/core';
 export class LoanEditComponent implements OnInit {
 
   loan: Loan;
-
-  // clientNames: string[] = []
-  // gameTitles: string[] = []
-  
+  clients: Client[];
+  games: Game[];
   
 
 
   constructor(
     public dialogRef: MatDialogRef<LoanEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private loanService: LoanService
+    private loanService: LoanService,
+    private clientService: ClientService,
+    private gameService: GameService,
+
 ) {}
 
   ngOnInit(): void {
@@ -41,7 +44,34 @@ export class LoanEditComponent implements OnInit {
     this.loan = this.data.loan ? Object.assign({}, this.data.loan) : new Loan();
     // this.clientNames=this.loanService.getClients()
     // this.gameTitles=this.loanService.getGames()
-  }
+   
+  
+        this.clientService.getClients.subscribe((clients) => {
+            this.clients = clients;
+  
+            if (this.loan.client != null) {
+                const clientFilter: Client[] = clients.filter(
+                    (client) => client.id == this.data.loan.client.id
+                );
+                if (clientFilter != null) {
+                    this.loan.client = clientFilter[0];
+                }
+            }
+        });
+  
+        this.gameService.getGames.subscribe((games) => {
+            this.games = games;
+  
+            if (this.loan.game != null) {
+                const gameFilter: Game[] = games.filter(
+                    (game) => game.id == this.data.game.id
+                );
+                if (gameFilter != null) {
+                    this.loan.game = gameFilter[0];
+                }
+            }
+        });
+    }
 
   onSave() {
     this.loanService.saveLoan(this.loan).subscribe(()=>{

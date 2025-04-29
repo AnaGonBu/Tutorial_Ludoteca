@@ -30,7 +30,7 @@ export class GameEditComponent implements OnInit{
       private categoryService: CategoryService,
       private authorService: AuthorService
   ) {}
-
+ 
   ngOnInit(): void {
       this.game = this.data.game ? Object.assign({}, this.data.game) : new Game();
 
