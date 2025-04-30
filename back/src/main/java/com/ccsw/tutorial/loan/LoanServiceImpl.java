@@ -13,10 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -39,13 +36,15 @@ public class LoanServiceImpl implements LoanService {
      */
     @Override
     public Page<Loan> findPage(LoanSearchDto dto) {
+        Specification<Loan> spec = Specification.where(null);
+        if (dto.getGame() != null) {
+            spec = spec.and(new LoanSpecification(new SearchCriteria("game.id", ":", dto.getGame())));
+        }
+        if (dto.getClient() != null) {
+            spec = spec.and(new LoanSpecification(new SearchCriteria("client.id", ":", dto.getClient())));
+        }
 
-        return loanRepo.findAll(dto.getPageable().getPageable());
-    }
-
-    @Override
-    public List<Loan> getAll() {
-        return (List<Loan>) loanRepo.findAll();
+        return loanRepo.findAll(spec, dto.getPageable().getPageable());
     }
 
     @Override
@@ -71,21 +70,16 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public int delete(Long id) throws Exception {
-        return 0;
+    public void delete(Long id) throws Exception {
+        if (this.loanRepo.findById(id).orElse(null) == null) {
+            throw new Exception("Not exists");
+        }
+
+        this.loanRepo.deleteById(id);
     }
 
-    @Override
-    @EntityGraph(attributePaths = { "game", "client" })
-    public List<Loan> find(Long idGame, Long idClient) {
-
-        LoanSpecification gameSpec = new LoanSpecification(new SearchCriteria("game.id", ":", idGame));
-        LoanSpecification clientSpec = new LoanSpecification(new SearchCriteria("client.id", ":", idClient));
-
-        Specification<Loan> spec = Specification.where(gameSpec).and(clientSpec);
-
-        return this.loanRepo.findAll(spec);
-    }
 }
+
+
 
 

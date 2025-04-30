@@ -5,6 +5,24 @@ import com.ccsw.tutorial.common.PageableRequest;
 public class LoanSearchDto {
 
     private PageableRequest pageable;
+    private Long game;
+    private Long client;
+
+    public Long getClient() {
+        return client;
+    }
+
+    public void setClient(Long client) {
+        this.client = client;
+    }
+
+    public Long getGame() {
+        return game;
+    }
+
+    public void setGame(Long game) {
+        this.game = game;
+    }
 
     public PageableRequest getPageable() {
         return pageable;

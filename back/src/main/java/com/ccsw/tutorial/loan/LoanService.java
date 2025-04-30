@@ -5,8 +5,6 @@ import com.ccsw.tutorial.loan.model.LoanDto;
 import com.ccsw.tutorial.loan.model.LoanSearchDto;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface LoanService {
 
     /**
@@ -16,13 +14,6 @@ public interface LoanService {
      * @return {@link Page} de {@link Loan}
      */
     Page<Loan> findPage(LoanSearchDto dto);
-
-    /**
-     * Método para recuperar todos los préstamos
-     *
-     * @return {@link Loan} de {@link Loan}
-     */
-    List<Loan> getAll();
 
     /**
      * Recupera una {@link Loan} a partir de su ID
@@ -46,14 +37,6 @@ public interface LoanService {
      * @param id y dto datos de la entidad
      */
 
-    int delete(Long id) throws Exception;
+    void delete(Long id) throws Exception;
 
-    /**
-     * Recupera los préstamos filtrando opcionalmente por cliente y/o juego
-     *
-     * @param idGame id del juego
-     * @param idClient nombre del cliente
-     * @return {@link List} de {@link Loan}
-     */
-    List<Loan> find(Long idGame, Long idClient);
 }

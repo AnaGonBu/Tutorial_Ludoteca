@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -31,20 +30,6 @@ public class LoanController {
     private ModelMapper mapper;
 
     /**
-     * Recupera el listado de autores {@link Loan}
-     *
-     * @return {@link List} de {@link LoanDto}
-     */
-    @Operation(summary = "Find", description = "Method that return a list of Loans")
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<LoanDto> findAll() {
-
-        List<Loan> loans = this.loanService.getAll();
-
-        return loans.stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
-    }
-
-    /**
      * Método para recuperar un listado paginado de {@link Loan}
      *
      * @param dto dto de búsqueda
@@ -54,26 +39,10 @@ public class LoanController {
     @RequestMapping(path = "", method = RequestMethod.POST)
 
     public Page<LoanDto> findPage(@RequestBody LoanSearchDto dto) {
-
+        System.out.println(("Entrando en findpage"));
         Page<Loan> page = this.loanService.findPage(dto);
 
         return new PageImpl<>(page.getContent().stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList()), page.getPageable(), page.getTotalElements());
-    }
-
-    /**
-     * Método para recuperar una lista de {@link Loan}
-     *
-     * @param idGame id del juego
-     * @param  idClient del cliente
-     * @return {@link List} de {@link LoanDto}
-     */
-    @Operation(summary = "Filtro", description = "Method that return a filtered list of Loans")
-    @RequestMapping(path = "/Filtro/{id}", method = RequestMethod.POST)
-    public List<LoanDto> find(@RequestParam(value = "game", required = false) Long idGame, @RequestParam(value = "client", required = false) Long idClient) {
-
-        List<Loan> games = loanService.find(idGame, idClient);
-
-        return games.stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
     }
 
     /**
@@ -94,10 +63,10 @@ public class LoanController {
      *
      * @param id PK de la entidad
      */
-   /* @Operation(summary = "Delete", description = "Method that deletes a Category")
+    @Operation(summary = "Delete", description = "Method that deletes a Category")
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Long id) throws Exception {
 
-        this.loans.remove(id);
-    }*/
+        this.loanService.delete(id);
+    }
 }

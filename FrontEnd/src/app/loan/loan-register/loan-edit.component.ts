@@ -1,16 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import {  MatError, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Loan } from '../model/loan';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoanService } from '../loan.service';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { Client } from '../../client/model/Client';
 import { Game } from '../../game/model/Game';
-import { CLIENT_DATA } from '../../client/model/mock-clients';
-import { GAME_DATA } from '../../game/model/mock-games';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClientService } from '../../client/client.service';
@@ -18,7 +16,9 @@ import { GameService } from '../../game/game.service';
 
 @Component({
   selector: 'app-loan-edit',
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule,MatError,MatLabel],
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule,MatSelectModule, MatDatepickerModule, MatNativeDateModule  ,MatError,MatLabel],
+  
   templateUrl: './loan-edit.component.html',
   styleUrl: './loan-edit.component.scss'
 })

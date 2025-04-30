@@ -40,7 +40,15 @@ clientes : Client[]
 games : Game[]
 loans : Loan[]
 
-constructor (private loanService: LoanService, 
+pageNumber: number = 0;
+pageSize: number = 5;
+totalElements: number = 10;
+
+displayedColumns: string[] = ['id', 'game', 'client', 'date1', 'date2', 'action'];
+dataSource = new MatTableDataSource<Loan>();
+
+constructor (
+  private loanService: LoanService, 
   public dialog: MatDialog, 
   private clientsService : ClientService,
   private gameService: GameService){}
@@ -57,47 +65,10 @@ onCleanFilter(): void {
   this.onSearch();
   }
 
-  onSearch(): void {
-    const gameId = this.filterTitle != null ? this.filterTitle.id : null;
-    const clientId = this.filterClient != null ? this.filterClient.id : null;
-    // this.loanService
-    // .getLoans(gameId, clientId)
-    // .subscribe((loans) => (this.loans = loans));
-  
-    // const pageable: Pageable = {
-    //   pageNumber: this.pageNumber,
-    //   pageSize: this.pageSize,
-    //   sort: [
-    //     {
-    //       property: 'id',
-    //       direction: 'ASC'
-    //     },
-    //   ],
-    // };
-  
-    // this.loanService.getFilteredLoans(gameId, clientId, pageable).subscribe((data) => {
-    //   this.dataSource.data = data.content.map(loanDto => {
-    //     return {
-    //       id: loanDto.id,
-    //       game: loanDto.game,
-    //       client: loanDto.client,
-    //       date1: loanDto.date1,
-    //       date2: loanDto.date2
-    //     };
-    //   });
-    //   this.pageNumber = data.pageable.pageNumber;
-    //   this.pageSize = data.pageable.pageSize;
-    //   this.totalElements = data.totalElements;
-    // });
+onSearch(): void {
+    this.pageNumber=0;
+    this.loadPage()
   }
-  
-
-  pageNumber: number = 0;
-  pageSize: number = 5;
-  totalElements: number = 10;
-
-displayedColumns: string[] = ['id', 'game', 'client', 'date1', 'date2'];
-dataSource = new MatTableDataSource<Loan>();
 
 loadPage(event?: PageEvent){
   const pageable: Pageable = {
@@ -114,8 +85,10 @@ loadPage(event?: PageEvent){
     pageable.pageSize = event.pageSize
     pageable.pageNumber = event.pageIndex;
   }
+  const game = this.filterTitle != null ? this.filterTitle.id : null;
+  const client = this.filterClient != null ? this.filterClient.id : null;
 
-  this.loanService.getLoans(pageable).subscribe((data)=>{
+  this.loanService.getLoans(pageable, game, client).subscribe((data)=>{
       this.dataSource.data = data.content.map(loanDto => {
         return{
           id:loanDto.id,
