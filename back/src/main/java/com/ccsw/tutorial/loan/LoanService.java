@@ -9,10 +9,6 @@ import java.util.List;
 
 public interface LoanService {
 
-    List<Loan> getFilterClients(Long idClient);
-
-    List<Loan> getFilterGames(Long idGame);
-
     /**
      * Método para recuperar un listado paginado de {@link Loan}
      *
@@ -55,9 +51,9 @@ public interface LoanService {
     /**
      * Recupera los préstamos filtrando opcionalmente por cliente y/o juego
      *
-     * @param title título del juego
-     * @param name nombre del cliente
+     * @param idGame id del juego
+     * @param idClient nombre del cliente
      * @return {@link List} de {@link Loan}
      */
-    List<Loan> find(String title, String name);
+    List<Loan> find(Long idGame, Long idClient);
 }

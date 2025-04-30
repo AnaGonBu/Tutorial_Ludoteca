@@ -55,89 +55,25 @@ export class CategoryListComponent implements OnInit {
       this.ngOnInit();
     });
   }
-  deleteCategory(category: Category) {
+  deleteCategory(category: Category) {    
     const dialogRef = this.dialog.open(DialogConfirmationComponent, {
-        data: {
-            title: `¿Desea eliminar ${category.name}?`,
-            description: "Atención si borra la categoría se perderán sus datos.<br> ¿Desea eliminarla?"
-        }
+      data: { title: `¿Desea eliminar ${category.name}?`,
+              description: "Atención si borra la categoría se perderán sus datos.<br> ¿Desea eliminarla?" }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-            this.categoryService.deleteCategory(category.id).subscribe({
-                next: (response) => {
-                    this.ngOnInit();
-                    this.snackBar.open('Categoría eliminada correctamente', 'Cerrar', { duration: 3000 });
-                },
-                error: (error) => {
-                    console.error('Error al eliminar la categoría:', error);
-                    let errorMessage = 'Error al eliminar la categoría.';
-
-                    if (error.error && typeof error.error === 'string') {
-                        errorMessage = error.error; // El mensaje está directamente aquí
-                    } else if (error.message) {
-                        errorMessage = error.message;
-                    }
-
-                    this.dialog.open(DialogConfirmationComponent, {
-                        data: {
-                            title: 'Error',
-                            description: errorMessage
-                        }
-                    });
-                }
-            });
-        }
+      if (result) {
+        this.categoryService.deleteCategory(category.id).subscribe(result => {
+          this.ngOnInit();
+        }); 
+      }
     });
-}
-
-
-  // deleteCategory(category: Category) { 
-  //   const dialogRef = this.dialog.open(DialogConfirmationComponent, { 
-  //     data: { title: `¿Desea eliminar ${category.name}?`, 
-  //     description: "Atención si borra la categoría se perderán sus datos.<br> ¿Desea eliminarla?" }
-  //    });
-  //     dialogRef.afterClosed().subscribe(result => { if (result) 
-  //       { this.categoryService.deleteCategory(category.id).subscribe({ next: (response) => {
-  //         this.ngOnInit(); 
-  //         this.snackBar.open('Categoría eliminada correctamente', 'Cerrar', { duration: 3000, 
-  //         }); 
-  //       }, error: (error) => {
-  //         console.error('Error al eliminar la categoría:', error);
-  //         let errorMessage = 'Error al eliminar la categoría.';
-      
-  //         if (error.error) {
-  //             errorMessage = error.error; // El mensaje está directamente aquí
-  //         } else if (error.message) {
-  //             errorMessage = error.message;
-  //         }
-      
-  //         alert(errorMessage);
-  //     }
-  //           }); 
-  //         } 
-  //       }); 
-  //     } 
-  
-  // deleteCategory(category: Category) {    
-  //   const dialogRef = this.dialog.open(DialogConfirmationComponent, {
-  //     data: { title: `¿Desea eliminar ${category.name}?`,
-  //             description: "Atención si borra la categoría se perderán sus datos.<br> ¿Desea eliminarla?" }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       this.categoryService.deleteCategory(category.id).subscribe(result => {
-  //         this.ngOnInit();
-  //       }); 
-  //     }
-  //   });
-  // } 
+  } 
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(categories => {
       this.dataSource.data = categories;
     });
   }
+ 
 }

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AUTHOR_DATA } from './model/mock-authors';
 import { Pageable } from '../core/model/page/Pageable';
 import { Observable, of } from 'rxjs';
 import { AuthorPage } from './model/AuthorPage';
 import { Author } from './model/Author';
 import { HttpClient } from '@angular/common/http';
-import { AUTHOR_DATA_LIST } from './model/mock-authors-list';
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,20 +35,5 @@ export class AuthorService {
   getAllAuthors(): Observable<Author[]> {
     return this.http.get<Author[]>(this.baseUrl);
   }
-  /* Mock (sin paginación)
-      constructor() {}
-
-    getAuthors(pageable: Pageable): Observable<AuthorPage> {
-        return of(AUTHOR_DATA);
-    }
-
-    saveAuthor(author: Author): Observable<void> {
-        return of(null);
-    }
-
-    deleteAuthor(idAuthor: number): Observable<void> {
-        return of(null);
-    }
-        */
 
 }

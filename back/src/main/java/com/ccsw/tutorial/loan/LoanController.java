@@ -1,7 +1,5 @@
 package com.ccsw.tutorial.loan;
 
-import com.ccsw.tutorial.client.ClientService;
-import com.ccsw.tutorial.game.GameService;
 import com.ccsw.tutorial.loan.model.Loan;
 import com.ccsw.tutorial.loan.model.LoanDto;
 import com.ccsw.tutorial.loan.model.LoanSearchDto;
@@ -13,10 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -33,27 +28,21 @@ public class LoanController {
     private LoanService loanService;
 
     @Autowired
-    private ClientService clientService;
-
-    @Autowired
-    private GameService gameService;
-
-    @Autowired
     private ModelMapper mapper;
 
     /**
      * Recupera el listado de autores {@link Loan}
      *
      * @return {@link List} de {@link LoanDto}
+     */
+    @Operation(summary = "Find", description = "Method that return a list of Loans")
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<LoanDto> findAll() {
 
-     @Operation(summary = "Find", description = "Method that return a list of Loans")
-     @RequestMapping(path = "", method = RequestMethod.GET)
-     public List<LoanDto> findAll() {
+        List<Loan> loans = this.loanService.getAll();
 
-     List<Loan> loans = this.loanService.getAll();
-
-     return loans.stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
-     }*/
+        return loans.stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
+    }
 
     /**
      * Método para recuperar un listado paginado de {@link Loan}
@@ -61,47 +50,28 @@ public class LoanController {
      * @param dto dto de búsqueda
      * @return {@link Page} de {@link LoanDto}
      */
-    @Operation(summary = "Find Page", description = "Method that returns a page of Loans")
+    @Operation(summary = "Find Page", description = "Method that return a page of Loans")
     @RequestMapping(path = "", method = RequestMethod.POST)
+
     public Page<LoanDto> findPage(@RequestBody LoanSearchDto dto) {
-        List<Loan> clients = new ArrayList<>();
-        List<Loan> games = new ArrayList<>();
 
-        if (dto.getClient() != null) {
-            Long idClient = clientService.findAll().stream().filter(client -> client.getName().equals(dto.getClient())).findFirst().map(Client::getId).orElse(null);
-            if (idClient != null) {
-                clients = loanService.getFilterClients(idClient);
-            }
-        }
+        Page<Loan> page = this.loanService.findPage(dto);
 
-        if (dto.getGame() != null) {
-            Long idGame = gameService.getAll().stream().filter(game -> game.getTitle().equals(dto.getGame())).findFirst().map(Game::getId).orElse(null);
-            if (idGame != null) {
-                games = loanService.getFilterGames(idGame);
-            }
-        }
-
-        Set<Loan> filtrados = new HashSet<>(clients);
-        filtrados.addAll(games);
-
-        Page<Loan> page = loanService.findPage(dto.getPageable());
-        List<LoanDto> loanDtos = page.getContent().stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
-
-        return new PageImpl<>(loanDtos, page.getPageable(), page.getTotalElements());
+        return new PageImpl<>(page.getContent().stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList()), page.getPageable(), page.getTotalElements());
     }
 
     /**
      * Método para recuperar una lista de {@link Loan}
      *
-     * @param title título del juego
-     * @param  name del cliente
+     * @param idGame id del juego
+     * @param  idClient del cliente
      * @return {@link List} de {@link LoanDto}
      */
-    @Operation(summary = "Find", description = "Method that return a filtered list of Loans")
-    @RequestMapping(path = "", method = RequestMethod.GET)
-    public List<LoanDto> find(@RequestParam(value = "game", required = false) String title, @RequestParam(value = "client", required = false) String name) {
+    @Operation(summary = "Filtro", description = "Method that return a filtered list of Loans")
+    @RequestMapping(path = "/Filtro/{id}", method = RequestMethod.POST)
+    public List<LoanDto> find(@RequestParam(value = "game", required = false) Long idGame, @RequestParam(value = "client", required = false) Long idClient) {
 
-        List<Loan> games = loanService.find(title, name);
+        List<Loan> games = loanService.find(idGame, idClient);
 
         return games.stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
     }

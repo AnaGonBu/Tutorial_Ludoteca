@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Game } from './model/Game';
-import { GAME_DATA } from './model/mock-games';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -38,13 +37,4 @@ private composeFindUrl(title?: string, categoryId?: number): string {
     return queryString ? `${this.baseUrl}?${queryString}` : this.baseUrl;
 }
 
-  // constructor() { }
-
-  // getGames(title?: string, categoryId?: number): Observable<Game[]> {
-  //   return of(GAME_DATA);
-  // }
-
-  // saveGame(game: Game): Observable<void> {
-  //   return of(null);
-  // }
 }

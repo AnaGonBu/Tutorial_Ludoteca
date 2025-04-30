@@ -1,13 +1,19 @@
 package com.ccsw.tutorial.loan;
 
+import com.ccsw.tutorial.client.ClientService;
+import com.ccsw.tutorial.common.criteria.SearchCriteria;
+import com.ccsw.tutorial.game.GameService;
 import com.ccsw.tutorial.loan.model.Loan;
 import com.ccsw.tutorial.loan.model.LoanDto;
 import com.ccsw.tutorial.loan.model.LoanSearchDto;
+import com.ccsw.tutorial.loan.model.LoanSpecification;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,15 +28,11 @@ public class LoanServiceImpl implements LoanService {
     @Autowired
     private ModelMapper mapper;
 
-    @Override
-    public List<Loan> getFilterClients(Long idClient) {
-        return this.loanRepo.findByClient(idClient);
-    }
+    @Autowired
+    private ClientService clientService;
 
-    @Override
-    public List<Loan> getFilterGames(Long idGame) {
-        return this.loanRepo.findByClient(idGame);
-    }
+    @Autowired
+    private GameService gameService;
 
     /**
      * {@inheritDoc}
@@ -62,8 +64,9 @@ public class LoanServiceImpl implements LoanService {
             loan = this.loanRepo.findById(id).orElse(null);
         }
 
-        BeanUtils.copyProperties(loanDto, loan, "id");
-
+        BeanUtils.copyProperties(loanDto, loan, "id", "Game", "Client");
+        loan.setGame(gameService.get(loanDto.getGame().getId()));
+        loan.setClient(clientService.get(loanDto.getClient().getId()));
         return this.loanRepo.save(loan);
     }
 
@@ -73,9 +76,15 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<Loan> find(String title, String name) {
+    @EntityGraph(attributePaths = { "game", "client" })
+    public List<Loan> find(Long idGame, Long idClient) {
 
-        return (List<Loan>) this.loanRepo.findAll();
+        LoanSpecification gameSpec = new LoanSpecification(new SearchCriteria("game.id", ":", idGame));
+        LoanSpecification clientSpec = new LoanSpecification(new SearchCriteria("client.id", ":", idClient));
+
+        Specification<Loan> spec = Specification.where(gameSpec).and(clientSpec);
+
+        return this.loanRepo.findAll(spec);
     }
 }
 

@@ -30,8 +30,8 @@ public class GameServiceImpl implements GameService {
     CategoryService categoryService;
 
     @Override
-    public Game get(String title) {
-        return this.gameRepository.findByTitle(title);
+    public Game get(Long idGame) {
+        return this.gameRepository.findById(idGame).orElse(null);
     }
 
     /**
