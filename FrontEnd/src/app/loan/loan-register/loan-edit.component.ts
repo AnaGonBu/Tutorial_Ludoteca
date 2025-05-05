@@ -80,6 +80,14 @@ onSave() {
   const date1 = new Date(this.loan.date1);
   const date2 = new Date(this.loan.date2);
   const diffDays = Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
+
+  
+
+   if (date2 <= date1) {
+     alert('La fecha de finalización (date2) debe ser posterior a la fecha de inicio (date1).');
+     return;
+     }
+    
       
   if (diffDays > 14) {
   alert('La diferencia entre las fechas no puede ser mayor a 14 días.');

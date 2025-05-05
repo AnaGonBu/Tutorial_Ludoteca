@@ -59,6 +59,7 @@ constructor (
   private gameService: GameService){}
 
 ngOnInit(): void {
+
   this.loadPage();
   this.loadAllLoans(); 
   }
@@ -88,9 +89,11 @@ onCleanFilter(): void {
 onSearch(): void {
     this.pageNumber=0;
     this.loadPage()
+  
   }
 
 loadPage(event?: PageEvent){
+  
   const pageable: Pageable = {
     pageNumber: this.pageNumber,
     pageSize: this.pageSize,
@@ -105,6 +108,7 @@ loadPage(event?: PageEvent){
     pageable.pageSize = event.pageSize
     pageable.pageNumber = event.pageIndex;
   }
+  
   const game = this.filterTitle != null ? this.filterTitle.id : null;
   const client = this.filterClient != null ? this.filterClient.id : null;
   const date = this.filterDate != null ? this.filterDate.toISOString().split('T')[0] : null;
