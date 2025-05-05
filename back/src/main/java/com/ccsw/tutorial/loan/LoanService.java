@@ -12,7 +12,7 @@ public interface LoanService {
 
     /**
      * Método para recuperar todos los prestamos
-     *
+     *me lo explicas?
      * @return {@link List} de {@link Client}
      */
     List<Loan> findAll();
@@ -37,9 +37,9 @@ public interface LoanService {
      * Método para crear  o modificar un préstamo
      *
      * @param dto datos de la entidad
-     * @param id datos de la entidad
+
      */
-    Loan save(Long id, LoanDto dto);
+    Loan save(LoanDto dto);
 
     /**
      * Método para modificar  un préstamo

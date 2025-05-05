@@ -2,11 +2,22 @@ package com.ccsw.tutorial.loan.model;
 
 import com.ccsw.tutorial.common.PageableRequest;
 
+import java.util.Date;
+
 public class LoanSearchDto {
 
     private PageableRequest pageable;
     private Long game;
     private Long client;
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public Long getClient() {
         return client;

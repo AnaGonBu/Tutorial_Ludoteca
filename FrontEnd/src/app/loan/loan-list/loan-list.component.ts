@@ -18,6 +18,8 @@ import { Game } from '../../game/model/Game';
 import { Client } from '../../client/model/Client';
 import { ClientService } from '../../client/client.service';
 import { GameService } from '../../game/game.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @Component({
   selector: 'app-loan-list',
@@ -29,13 +31,16 @@ import { GameService } from '../../game/game.service';
             FormsModule,
             MatFormFieldModule,
             MatInputModule,
-            MatSelectModule],
+            MatSelectModule,
+            MatDatepickerModule,
+            MatNativeDateModule ],
   templateUrl: './loan-list.component.html',
   styleUrl: './loan-list.component.scss'
 })
 export class LoanListComponent implements OnInit {
 filterTitle: Game;
 filterClient: Client;
+filterDate : Date;
 clientes : Client[]
 games : Game[]
 loans : Loan[]
@@ -76,6 +81,7 @@ loadAllLoans(): void {
 onCleanFilter(): void {
   this.filterClient =null;
   this.filterTitle = null;
+  this.filterDate = null;
   this.onSearch();
   }
 
@@ -101,8 +107,9 @@ loadPage(event?: PageEvent){
   }
   const game = this.filterTitle != null ? this.filterTitle.id : null;
   const client = this.filterClient != null ? this.filterClient.id : null;
+  const date = this.filterDate != null ? this.filterDate.toISOString().split('T')[0] : null;
 
-  this.loanService.getLoans(pageable, game, client).subscribe((data)=>{
+  this.loanService.getLoans(pageable, game, client, date).subscribe((data)=>{
       this.dataSource.data = data.content.map(loanDto => {
         return{
           id:loanDto.id,

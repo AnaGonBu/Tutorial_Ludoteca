@@ -26,7 +26,7 @@
         </mat-form-field>
         <mat-form-field>
             <input matInput [matDatepicker]="picker1" placeholder="Fecha inicio" [(ngModel)]="loan.date1" name="date1" required>
-            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> 
             <mat-datepicker #picker1></mat-datepicker>
             <mat-error>La fecha no puede estar vacía</mat-error>
             </mat-form-field>

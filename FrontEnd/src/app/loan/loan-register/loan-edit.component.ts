@@ -13,7 +13,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ClientService } from '../../client/client.service';
 import { GameService } from '../../game/game.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 
 @Component({
@@ -40,12 +40,14 @@ export class LoanEditComponent implements OnInit
     private clientService: ClientService,
     private gameService: GameService,
 
+
+
 ) {}
 
   ngOnInit(): void {
 
     this.loan = this.data.loan ? Object.assign({}, this.data.loan) : new Loan();
-   
+    
         this.clientService.getClients().subscribe((clients) => {
             this.clients = clients;
   
@@ -72,29 +74,27 @@ export class LoanEditComponent implements OnInit
             }
         });
     }
+    
 
-
-
-    onSave() {
-        const date1 = new Date(this.loan.date1);
-        const date2 = new Date(this.loan.date2);
-        const diffDays = Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
+onSave() {
+  const date1 = new Date(this.loan.date1);
+  const date2 = new Date(this.loan.date2);
+  const diffDays = Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
       
-        if (diffDays > 14) {
-          alert('La diferencia entre las fechas no puede ser mayor a 14 días.');
-          return;
-        }
+  if (diffDays > 14) {
+  alert('La diferencia entre las fechas no puede ser mayor a 14 días.');
+  return;
+  }
       
-        this.loanService.saveLoan(this.loan).subscribe({
-          next: () => {
-            this.dialogRef.close();
-          },
-          error: (error) => {
-            console.error('Error al guardar el préstamo:', error);
-            alert('Hubo un error al guardar el préstamo. Por favor, inténtalo de nuevo.');
-          }
-        });
-      }
+  this.loanService.saveLoan(this.loan).subscribe({
+  next: () => {
+      this.dialogRef.close();
+  },
+  error: (error) => {
+      console.error('Error al guardar el préstamo:', error);
+      alert('Hubo un error al guardar el préstamo. Por favor, inténtalo de nuevo.');
+  }});
+}
       
       
 

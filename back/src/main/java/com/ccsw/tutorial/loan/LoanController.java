@@ -64,11 +64,11 @@ public class LoanController {
      *
      * @param dto LoanDto
      */
-    @Operation(summary = "Save or Update", description = "Method that saves or updates a Game")
-    @RequestMapping(path = { "", "/{id}" }, method = RequestMethod.PUT)
-    public void save(@PathVariable(name = "id", required = false) Long id, @RequestBody LoanDto dto) {
+    @Operation(summary = "Save ", description = "Method that saves  a Loan")
+    @RequestMapping(path = { "/alta" }, method = RequestMethod.POST)
+    public void save(@RequestBody LoanDto dto) {
 
-        loanService.save(id, dto);
+        loanService.save(dto);
 
     }
 

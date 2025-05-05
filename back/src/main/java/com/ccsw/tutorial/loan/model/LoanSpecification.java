@@ -4,6 +4,8 @@ import com.ccsw.tutorial.common.criteria.SearchCriteria;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Date;
+
 public class LoanSpecification implements Specification<Loan> {
 
     private static final long serialVersionUID = 1L;
@@ -24,7 +26,11 @@ public class LoanSpecification implements Specification<Loan> {
             } else {
                 return builder.equal(path, criteria.getValue());
             }
+        } else if (criteria.getOperation().equalsIgnoreCase("between") && criteria.getValue() != null) {
+            Date date = (Date) criteria.getValue();
+            return builder.and(builder.lessThanOrEqualTo(root.get("date1"), date), builder.greaterThanOrEqualTo(root.get("date2"), date));
         }
+
         return null;
     }
 

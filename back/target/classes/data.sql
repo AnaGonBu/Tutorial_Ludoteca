@@ -1,3 +1,5 @@
+
+
 INSERT INTO category(name) VALUES ('Eurogames');
 INSERT INTO category(name) VALUES ('Ameritrash');
 INSERT INTO category(name) VALUES ('Familiar');
@@ -26,10 +28,11 @@ INSERT INTO client(name) VALUES ('TeamElectra' );
 INSERT INTO client(name) VALUES ('GuerraLimpia') ;
 INSERT INTO client(name) VALUES ('Malakita' );
 
+ALTER TABLE loan DROP CONSTRAINT UKb8hjt9f0vfof52xait5x649l0;
+ALTER TABLE loan ADD CONSTRAINT unique_game_date UNIQUE (game_id, date1, date2);
 INSERT INTO loan(game_id, client_id, date1, date2) VALUES (1,2,'2025-01-06', '2025-01-16');
 INSERT INTO loan(game_id, client_id, date1, date2) VALUES (2,2,'2025-01-06', '2025-01-16');
 INSERT INTO loan(game_id, client_id, date1, date2) VALUES (3,1,'2025-01-07', '2025-01-17');
 INSERT INTO loan(game_id, client_id, date1, date2) VALUES (4,3,'2025-01-06', '2025-01-16');
 INSERT INTO loan(game_id, client_id, date1, date2) VALUES (5,6,'2025-01-06', '2025-01-16');
-INSERT INTO loan(game_id, client_id, date1, date2) VALUES (6,7,'2025-01-06', '2025-01-16');
 

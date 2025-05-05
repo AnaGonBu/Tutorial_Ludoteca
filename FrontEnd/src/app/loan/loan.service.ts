@@ -16,13 +16,15 @@ export class LoanService {
 ) { }
 
 private baseUrl = 'http://localhost:8080/loan';
+private baseUrlAlta =  'http://localhost:8080/loan/alta';
 
 
-getLoans(pageable: Pageable, game?: number | null, client?: number | null): Observable<LoanPage> {
+getLoans(pageable: Pageable, game?: number | null, client?: number | null, date?:string): Observable<LoanPage> {
   const body = {
   pageable: pageable,
   game: game ?? null,
-  client: client ?? null
+  client: client ?? null,
+  date: date ?? null
   };
   return this.http.post<LoanPage>(this.baseUrl, body); 
 }
@@ -51,11 +53,19 @@ return this.http.get<Loan[]>(this.baseUrl);
 // }
 
 saveLoan(loan: Loan): Observable<Loan> {
-    if (loan.id) {
-      return this.http.put<Loan>(`${this.baseUrl}/${loan.id}`, loan);
-    } else {
-      return this.http.post<Loan>(this.baseUrl, loan);
-    }
+  
+
+   const loanDto = {
+
+     game: loan.game,
+     client: loan.client,
+     date1: loan.date1,
+     date2: loan.date2
+     };
+    
+
+      return this.http.post<Loan>(this.baseUrlAlta, loanDto);
+    
   }
 
 deleteLoan(idLoan : number): Observable<any> {
