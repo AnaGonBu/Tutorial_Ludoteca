@@ -7,21 +7,23 @@
             <input type="text" matInput placeholder={{loan.id}} [(ngModel)]="loan.id" name="id" disabled>
         </mat-form-field>
         <mat-form-field>
-            <input type="text" matInput placeholder="Nombre del cliente" [(ngModel)]="loan.client.name" name="client" required>
-            <mat-error>El nombre no puede estar vacío</mat-error>
+            <mat-label>Juego</mat-label>
+            <mat-select disableRipple [(ngModel)]="loan.game" name="game" required>
+                @for (game of games; track game.id) {
+                    <mat-option [value]="game">{{game.title}}</mat-option>
+                }
+            </mat-select>
+            <mat-error>El juego no puede estar vacía</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type="text" matInput placeholder="Nombre del juego" [(ngModel)]="loan.game.title" name="name" required>
-            <mat-error>El nombre no puede estar vacío</mat-error>
+            <mat-label>Cliente</mat-label>
+            <mat-select disableRipple [(ngModel)]="loan.client" name="client" required>
+                @for (client of clients; track client.id) {
+                    <mat-option [value]="client">{{client.name}}</mat-option>
+                }
+            </mat-select>
+            <mat-error>La categoría no puede estar vacía</mat-error>
         </mat-form-field>
-        <!-- <mat-form-field>
-            <mat-label>Choose a date</mat-label>
-            <input matInput [matDatepicker]="picker">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field> -->
-
         <mat-form-field>
             <input matInput [matDatepicker]="picker1" placeholder="Fecha inicio" [(ngModel)]="loan.date1" name="date1" required>
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

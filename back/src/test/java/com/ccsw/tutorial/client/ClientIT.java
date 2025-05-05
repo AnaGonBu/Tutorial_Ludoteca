@@ -33,6 +33,53 @@ public class ClientIT {
     ParameterizedTypeReference<List<ClientDto>> responseType = new ParameterizedTypeReference<List<ClientDto>>() {
     };
 
+/*    @Test
+    public void saveWithoutIdShouldCreateNewCategory() {
+
+        CategoryDto dto = new CategoryDto();
+        dto.setName(NEW_CATEGORY_NAME);
+
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
+
+        ResponseEntity<List<CategoryDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+        assertNotNull(response);
+        assertEquals(4, response.getBody().size());
+
+        CategoryDto categorySearch = response.getBody().stream().filter(item -> item.getId().equals(NEW_CATEGORY_ID)).findFirst().orElse(null);
+        assertNotNull(categorySearch);
+        assertEquals(NEW_CATEGORY_NAME, categorySearch.getName());
+    }
+
+    @Test
+    public void modifyWithNotExistIdShouldThrowException() {
+
+        long authorId = TOTAL_AUTHORS + 1;
+
+        AuthorDto dto = new AuthorDto();
+        dto.setName(NEW_AUTHOR_NAME);
+
+        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + authorId, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+    }
+
+    @Test
+    public void modifyWithExistIdShouldModifyClient() {
+
+        CategoryDto dto = new CategoryDto();
+        dto.setName(NEW_CATEGORY_NAME);
+
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + MODIFY_CATEGORY_ID, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
+
+        ResponseEntity<List<CategoryDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+        assertNotNull(response);
+        assertEquals(3, response.getBody().size());
+
+        CategoryDto categorySearch = response.getBody().stream().filter(item -> item.getId().equals(MODIFY_CATEGORY_ID)).findFirst().orElse(null);
+        assertNotNull(categorySearch);
+        assertEquals(NEW_CATEGORY_NAME, categorySearch.getName());
+    }*/
+
     @Test
     public void findAllShouldReturnAllClients() {
 

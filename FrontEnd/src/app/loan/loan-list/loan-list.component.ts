@@ -55,9 +55,23 @@ constructor (
 
 ngOnInit(): void {
   this.loadPage();
-  this.clientsService.getClients().subscribe(clients => this.clientes = clients);
-  this.gameService.getGames().subscribe(games => this.games = games);    
+  this.loadAllLoans(); 
   }
+  
+loadAllLoans(): void {
+  this.loanService.getAllLoans().subscribe((loans) => {
+  this.loans = loans;
+  
+  // Crear un Set basado en el nombre del cliente
+  const clientNames = new Set(loans.map(loan => loan.client.name));
+  this.clientes = Array.from(clientNames).map(name => loans.find(loan => loan.client.name === name).client);
+  
+  // Crear un Set basado en el título del juego, por si a futuro, se permite más de un préstamo
+  const gameTitles = new Set(loans.map(loan => loan.game.title));
+  this.games = Array.from(gameTitles).map(title => loans.find(loan => loan.game.title === title).game);
+ });
+  }
+  
 
 onCleanFilter(): void {
   this.filterClient =null;
@@ -101,7 +115,8 @@ loadPage(event?: PageEvent){
       });
       this.pageNumber = data.pageable.pageNumber;
       this.pageSize = data.pageable.pageSize;
-      this.totalElements = data.totalElements;
+      this.totalElements = data.totalElements; 
+
   });
 }
 

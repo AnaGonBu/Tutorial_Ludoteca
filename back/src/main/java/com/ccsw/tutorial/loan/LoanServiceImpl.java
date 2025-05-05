@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class LoanServiceImpl implements LoanService {
@@ -30,6 +32,11 @@ public class LoanServiceImpl implements LoanService {
 
     @Autowired
     private GameService gameService;
+
+    @Override
+    public List<Loan> findAll() {
+        return (List<Loan>) loanRepo.findAll();
+    }
 
     /**
      * {@inheritDoc}

@@ -70,4 +70,12 @@ public class GameServiceImpl implements GameService {
         this.gameRepository.save(game);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Game> FindAll() {
+        return (List<Game>) gameRepository.findAll();
+    }
+
 }

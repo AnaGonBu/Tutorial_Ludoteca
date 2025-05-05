@@ -36,5 +36,7 @@ private composeFindUrl(title?: string, categoryId?: number): string {
     const queryString = params.toString();
     return queryString ? `${this.baseUrl}?${queryString}` : this.baseUrl;
 }
-
+getAllGames(): Observable<Game[]>{
+  return this.http.get<Game[]>(this.baseUrl);
+}
 }

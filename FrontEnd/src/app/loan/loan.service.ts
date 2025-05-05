@@ -26,6 +26,11 @@ getLoans(pageable: Pageable, game?: number | null, client?: number | null): Obse
   };
   return this.http.post<LoanPage>(this.baseUrl, body); 
 }
+getAllLoans(){
+  
+return this.http.get<Loan[]>(this.baseUrl);
+
+}
 
 // getLoans(pageable: Pageable, gameId?: number, clientId?: number, date?: Date): Observable<LoanPage> {
 //   let url = this.baseUrl;

@@ -35,4 +35,10 @@ public interface GameService {
      */
     void save(Long id, GameDto dto);
 
+    /**
+     * Recupera los juegos
+     * @return  {@link Game}
+     */
+    List<Game> FindAll();
+
 }

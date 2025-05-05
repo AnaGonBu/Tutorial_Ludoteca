@@ -57,9 +57,6 @@ export class AuthorListComponent implements OnInit {
     });
   }
 
-
-
-
 createAuthor() {
   const dialogRef = this.dialog.open(AuthorEditComponent, {
     data: {},
@@ -98,8 +95,5 @@ deleteAuthor(author: Author) {
       }
   });
 }
-
-
-
 
 }

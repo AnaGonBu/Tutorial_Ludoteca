@@ -1,11 +1,21 @@
 package com.ccsw.tutorial.loan;
 
+import com.ccsw.tutorial.client.model.Client;
 import com.ccsw.tutorial.loan.model.Loan;
 import com.ccsw.tutorial.loan.model.LoanDto;
 import com.ccsw.tutorial.loan.model.LoanSearchDto;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface LoanService {
+
+    /**
+     * Método para recuperar todos los prestamos
+     *
+     * @return {@link List} de {@link Client}
+     */
+    List<Loan> findAll();
 
     /**
      * Método para recuperar un listado paginado de {@link Loan}

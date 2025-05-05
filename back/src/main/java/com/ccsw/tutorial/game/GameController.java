@@ -30,6 +30,19 @@ public class GameController {
     /**
      * Método para recuperar una lista de {@link Game}
      *
+     * @return {@link List} de {@link GameDto}
+     */
+    @Operation(summary = "FindAll", description = "Method that return a list of Games")
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public List<GameDto> findAll() {
+        List<Game> games = gameService.FindAll();
+
+        return games.stream().map(e -> mapper.map(e, GameDto.class)).collect(Collectors.toList());
+    }
+
+    /**
+     * Método para recuperar una lista de {@link Game}
+     *
      * @param title título del juego
      * @param idCategory PK de la categoría
      * @return {@link List} de {@link GameDto}

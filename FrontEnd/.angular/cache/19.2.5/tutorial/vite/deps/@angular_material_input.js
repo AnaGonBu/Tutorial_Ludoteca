@@ -35,12 +35,12 @@ import "./chunk-UU5Z7QKS.js";
 import {
   coerceBooleanProperty
 } from "./chunk-X3P5GA7C.js";
+import "./chunk-65RJ5ZZ2.js";
 import {
   MatCommonModule,
   _IdGenerator
 } from "./chunk-74WBYWGJ.js";
 import "./chunk-M3HR6BUY.js";
-import "./chunk-65RJ5ZZ2.js";
 import "./chunk-3XXXK3CI.js";
 import "./chunk-XQXC54WC.js";
 import {

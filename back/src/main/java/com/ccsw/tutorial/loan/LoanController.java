@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +29,19 @@ public class LoanController {
 
     @Autowired
     private ModelMapper mapper;
+
+    /**
+     * Método para recuperar todos los préstamos
+     *
+     * @return {@link List} de {@link LoanDto}
+     */
+    @Operation(summary = "Find", description = "Method that return a list of Categories")
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<LoanDto> findAll() {
+        List<Loan> loans = this.loanService.findAll();
+
+        return loans.stream().map(e -> mapper.map(e, LoanDto.class)).collect(Collectors.toList());
+    }
 
     /**
      * Método para recuperar un listado paginado de {@link Loan}
