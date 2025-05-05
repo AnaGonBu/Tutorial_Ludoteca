@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {  MatError, MatFormFieldModule, MatLabel} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Loan } from '../model/loan';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoanService } from '../loan.service';
 import { MatSelectModule } from '@angular/material/select';
 import { Client } from '../../client/model/Client';
@@ -14,6 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ClientService } from '../../client/client.service';
 import { GameService } from '../../game/game.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
 
 
 @Component({
@@ -39,6 +40,7 @@ export class LoanEditComponent implements OnInit
     private loanService: LoanService,
     private clientService: ClientService,
     private gameService: GameService,
+    public dialog : MatDialog,
 
 
 
@@ -84,13 +86,18 @@ onSave() {
   
 
    if (date2 <= date1) {
-     alert('La fecha de finalización (date2) debe ser posterior a la fecha de inicio (date1).');
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+        data: { tittle:'Error', description:'La fecha de finalización (date2) debe ser posterior a la fecha de inicio (date1).'}
+      });
+   
      return;
      }
     
       
   if (diffDays > 14) {
-  alert('La diferencia entre las fechas no puede ser mayor a 14 días.');
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+        data: { tittle:'Error', description:'La diferencia entre las fechas no puede ser mayor a 14 días.'}
+      });
   return;
   }
       
@@ -100,10 +107,13 @@ onSave() {
   },
   error: (error) => {
       console.error('Error al guardar el préstamo:', error);
-      alert('Hubo un error al guardar el préstamo. Por favor, inténtalo de nuevo.');
+      const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+        data: { tittle:'Error', description:'Hubo un error al guardar el préstamo. Por favor, inténtalo de nuevo.'}
+      });
+      
   }});
 }
-      
+  
       
 
     onClose() {
