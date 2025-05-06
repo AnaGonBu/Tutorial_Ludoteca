@@ -45,7 +45,6 @@ public class ClientServiceImpl implements ClientService {
         Client clientName = this.clientRepository.findByName(dto.getName());
 
         if (clientName == null && id != null) {
-            client = new Client();
             client = this.clientRepository.findById(id).orElse(null);
             client.setName(dto.getName());
             this.clientRepository.save(client);
@@ -54,29 +53,7 @@ public class ClientServiceImpl implements ClientService {
         }
 
     }
-
-    /*  @Override
-      public void save(Long id, ClientDto dto) {
-          Client client;
-          Client clientName = this.clientRepository.findByName(dto.getName());
-
-          if (clientName != null && (id == null || !clientName.getId().equals(id))) {
-              throw new IllegalArgumentException("Client name already exists: " + dto.getName());
-          }
-
-          if (id == null) {
-              client = new Client();
-          } else {
-              client = this.clientRepository.findById(id).orElse(null);
-              if (client == null) {
-                  throw new EntityNotFoundException("Client not found with id: " + id);
-              }
-          }
-
-          client.setName(dto.getName());
-          this.clientRepository.save(client);
-      }
-  */
+    
     @Override
     public void delete(Long id) throws Exception {
 

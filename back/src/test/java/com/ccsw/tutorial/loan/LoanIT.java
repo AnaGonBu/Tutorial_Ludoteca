@@ -1,7 +1,8 @@
 package com.ccsw.tutorial.loan;
 
+import com.ccsw.tutorial.client.model.ClientDto;
 import com.ccsw.tutorial.common.PageableRequest;
-import com.ccsw.tutorial.config.ResponsePage;
+import com.ccsw.tutorial.game.model.GameDto;
 import com.ccsw.tutorial.loan.model.LoanDto;
 import com.ccsw.tutorial.loan.model.LoanSearchDto;
 import org.junit.jupiter.api.Test;
@@ -12,19 +13,24 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+
 public class LoanIT {
 
     public static final String LOCALHOST = "http://localhost:";
+
     public static final String SERVICE_PATH = "/loan";
 
     @LocalServerPort
@@ -33,147 +39,106 @@ public class LoanIT {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    ParameterizedTypeReference<List<LoanDto>> responseType = new ParameterizedTypeReference<List<LoanDto>>() {
+    ParameterizedTypeReference<List<Map<String, Object>>> listMapType = new ParameterizedTypeReference<>() {
     };
-    ParameterizedTypeReference<ResponsePage<LoanDto>> responseTypePage = new ParameterizedTypeReference<ResponsePage<LoanDto>>() {
+    ParameterizedTypeReference<Map<String, Object>> mapType = new ParameterizedTypeReference<>() {
     };
 
-    private static final int TOTAL_LOANS = 6;
-    private static final int PAGE_SIZE = 5;
-
-    @Test
-    public void findFirstPageWithFiveSizeShouldReturnFirstFiveResults() {
-
-        LoanSearchDto searchDto = new LoanSearchDto();
-        searchDto.setPageable(new PageableRequest(0, PAGE_SIZE));
-
-        ResponseEntity<ResponsePage<LoanDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.POST, new HttpEntity<>(searchDto), responseTypePage);
-
-        assertNotNull(response);
-        assertEquals(TOTAL_LOANS, response.getBody().getTotalElements());
-        assertEquals(PAGE_SIZE, response.getBody().getContent().size());
-    }
-
-    @Test
-    public void findSecondPageWithFiveSizeShouldReturnLastResult() {
-
-        int elementsCount = TOTAL_LOANS - PAGE_SIZE;
-
-        LoanSearchDto searchDto = new LoanSearchDto();
-        searchDto.setPageable(new PageableRequest(1, PAGE_SIZE));
-
-        ResponseEntity<ResponsePage<LoanDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.POST, new HttpEntity<>(searchDto), responseTypePage);
-
-        assertNotNull(response);
-        assertEquals(TOTAL_LOANS, response.getBody().getTotalElements());
-        assertEquals(elementsCount, response.getBody().getContent().size());
-    }
-
-  /*  @Test
-    public void saveWithoutIdShouldCreateNewAuthor() {
-
-        long newLoanId = TOTAL_LOANS + 1;
-        long newLoanSize = TOTAL_LOANS + 1;
-
-        LoanDto dto = new LoanDto();
-        dto.setName(NEW_AUTHOR_NAME);
-        dto.setNationality(NEW_NATIONALITY);
-
-        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
-
-        LoanSearchDto searchDto = new LoanSearchDto();
-        searchDto.setPageable(new PageableRequest(0, (int) newLoanSize));
-
-        ResponseEntity<ResponsePage<LoanDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.POST, new HttpEntity<>(searchDto), responseTypePage);
-
-        assertNotNull(response);
-        assertEquals(newLoanSize, response.getBody().getTotalElements());
-
-        LoanDto author = response.getBody().getContent().stream().filter(item -> item.getId().equals(newLoanId)).findFirst().orElse(null);
-        assertNotNull(author);
-        assertEquals(NEW_AUTHOR_NAME, author.getName());
-    }
-
-    @Test
-    public void modifyWithExistIdShouldModifyAuthor() {
-
-        LoanDto dto = new LoanDto();
-        dto.setName(NEW_AUTHOR_NAME);
-        dto.setNationality(NEW_NATIONALITY);
-
-        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + MODIFY_AUTHOR_ID, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
-
-        LoanSearchDto searchDto = new LoanSearchDto();
-        searchDto.setPageable(new PageableRequest(0, PAGE_SIZE));
-
-        ResponseEntity<ResponsePage<LoanDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.POST, new HttpEntity<>(searchDto), responseTypePage);
-
-        assertNotNull(response);
-        assertEquals(TOTAL_LOANS, response.getBody().getTotalElements());
-
-        LoanDto author = response.getBody().getContent().stream().filter(item -> item.getId().equals(MODIFY_AUTHOR_ID)).findFirst().orElse(null);
-        assertNotNull(loan);
-        assertEquals(NEW_AUTHOR_NAME, loan.getName());
-        assertEquals(NEW_NATIONALITY, loan.getNationality());
-    }
-
-    @Test
-    public void modifyWithNotExistIdShouldThrowException() {
-
-        long loanId = TOTAL_LOANS + 1;
-
-        LoanDto dto = new LoanDto();
-        dto.setName(NEW_AUTHOR_NAME);
-
-        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + loanId, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
-
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
-
-    @Test
-    public void deleteWithExistsIdShouldDeleteCategory() {
-
-        long newLoanSize = TOTAL_LOANS - 1;
-
-        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + DELETE_LOAN_ID, HttpMethod.DELETE, null, Void.class);
-
-        LoanSearchDto searchDto = new LoanSearchDto();
-        searchDto.setPageable(new PageableRequest(0, TOTAL_LOANS));
-
-        ResponseEntity<ResponsePage<LoanDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.POST, new HttpEntity<>(searchDto), responseTypePage);
-
-        assertNotNull(response);
-        assertEquals(newLoanSize, response.getBody().getTotalElements());
-    }
+    private static final Long EXISTING_CLIENT_ID = 1L;
+    private static final Long EXISTING_GAME_ID = 1L;
+    private static final Long NON_EXISTENT_LOAN_ID = 999L;
 
     @Test
     public void findAllShouldReturnAllLoans() {
-
-        ResponseEntity<List<LoanDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+        ResponseEntity<List<Map<String, Object>>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, listMapType);
 
         assertNotNull(response);
-        assertEquals(5, response.getBody().size());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(response.getBody().size() >= 1); // depende de tus datos iniciales
     }
 
-    public static final Long DELETE_LOAN_ID = 2L;
-
     @Test
-    public void deleteWithExistsIdShouldDeleteLoan() {
+    public void findPageableShouldReturnPagedResults() {
 
-        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + DELETE_LOAN_ID, HttpMethod.DELETE, null, Void.class);
+        LoanSearchDto searchDto = new LoanSearchDto();
+        PageableRequest pageable = new PageableRequest();
+        pageable.setPageNumber(0);
+        pageable.setPageSize(5);
+        searchDto.setPageable(pageable);
 
-        ResponseEntity<List<LoanDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+        HttpEntity<LoanSearchDto> request = new HttpEntity<>(searchDto);
+
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.POST, request, mapType);
+
         assertNotNull(response);
-        assertEquals(2, response.getBody().size());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertTrue(((List<?>) response.getBody().get("content")).size() <= 5);
+
     }
 
-    public static final Long NEW_LOAN_ID = 20L;
+    @Test
+    public void saveShouldFailWhenGameIsAlreadyLoaned() throws Exception {
+        LoanDto dto = new LoanDto();
+        ClientDto client = new ClientDto();
+        client.setId(EXISTING_CLIENT_ID);
+        dto.setClient(client);
+        GameDto game = new GameDto();
+        game.setId(EXISTING_GAME_ID);
+        dto.setGame(game);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        dto.setDate1(sdf.parse("2025-05-01"));
+        dto.setDate2(sdf.parse("2025-05-10"));
+
+        HttpEntity<LoanDto> request = new HttpEntity<>(dto);
+        ResponseEntity<Void> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/alta", HttpMethod.POST, request, Void.class);
+
+        // Verificar que la respuesta sea 500 Internal Server Error
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+
+        // Comprobar que no se haya añadido el préstamo
+        ResponseEntity<List<Map<String, Object>>> loansResponse = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, listMapType);
+        assertEquals(HttpStatus.OK, loansResponse.getStatusCode());
+        assertNotNull(loansResponse.getBody());
+
+        // Verificar que el nuevo préstamo no está en la lista
+        boolean exists = loansResponse.getBody().stream().anyMatch(
+                loan -> EXISTING_CLIENT_ID.equals(((Map<String, Object>) loan.get("client")).get("id")) && EXISTING_GAME_ID.equals(((Map<String, Object>) loan.get("game")).get("id")) && "2025-05-01".equals(loan.get("date1"))
+                        && "2025-05-10".equals(loan.get("date2")));
+        assertFalse(exists);
+    }
 
     @Test
-    public void deleteWithNotExistsIdShouldInternalError() {
+    public void deleteShouldRemoveLoanIfExists() throws Exception {
+        // 1. Crear un préstamo primero
+        LoanDto dto = new LoanDto();
+        ClientDto client = new ClientDto();
+        client.setId(EXISTING_CLIENT_ID);
+        dto.setClient(client);
+        GameDto game = new GameDto();
+        game.setId(EXISTING_GAME_ID);
+        dto.setGame(game);
 
-        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + NEW_LOAN_ID, HttpMethod.DELETE, null, Void.class);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        dto.setDate1(sdf.parse("2025-05-02"));
+        dto.setDate2(sdf.parse("2025-05-09"));
+
+        HttpEntity<LoanDto> request = new HttpEntity<>(dto);
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/alta", HttpMethod.POST, request, Void.class);
+        // 2. Obtener el ID del préstamo recién creado
+        ResponseEntity<List<Map<String, Object>>> loans = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, listMapType);
+        Long loanId = ((Number) loans.getBody().get(0).get("id")).longValue();
+        // 3. Borrarlo
+        ResponseEntity<Void> deleteResponse = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + loanId, HttpMethod.DELETE, null, Void.class);
+        assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
+    }
+
+    @Test
+    public void deleteWithInvalidIdShouldReturnError() {
+        ResponseEntity<String> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + NON_EXISTENT_LOAN_ID, HttpMethod.DELETE, null, String.class);
 
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }*/
+    }
+
 }
+

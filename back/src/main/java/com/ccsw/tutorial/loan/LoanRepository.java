@@ -18,13 +18,11 @@ public interface LoanRepository extends CrudRepository<Loan, Long>, JpaSpecifica
     @Query("SELECT COUNT(l) > 0 FROM Loan l WHERE l.game.id = :gameId AND " + "(:date1 BETWEEN l.date1 AND l.date2 OR :date2 BETWEEN l.date1 AND l.date2)")
     boolean existsByGameIdAndDateRange(@Param("gameId") Long gameId, @Param("date1") Date date1, @Param("date2") Date date2);
 
-    //@Query("SELECT COUNT(l) > 0 FROM Loan l WHERE l.client.id = :clientId AND " + "(:date1 BETWEEN l.date1 AND l.date2 OR :date2 BETWEEN l.date1 AND l.date2)")
-    //boolean existsByClientIdAndDateRange(@Param("clientId") Long clientId, @Param("date1") Date date1, @Param("date2") Date date2);
-    @Query("SELECT COUNT(l) > 0 FROM Loan l WHERE l.client.id = :clientId AND " + "(:date1 BETWEEN l.date1 AND l.date2 OR :date2 BETWEEN l.date1 AND l.date2 OR " + "l.date1 BETWEEN :date1 AND :date2 OR l.date2 BETWEEN :date1 AND :date2)")
-    boolean existsByClientIdAndDateRange(@Param("clientId") Long clientId, @Param("date1") Date date1, @Param("date2") Date date2);
+    //@Query("SELECT COUNT(l) > 0 FROM Loan l WHERE l.client.id = :clientId AND :date BETWEEN l.date1 AND l.date2")
+    //boolean countByClientIdAndDateRange(@Param("clientId") Long clientId, @Param("date") Date date);
 
     /**
-     * Método para recuperar un listado paginado de {@link Loan}
+     * Consulta para recuperar un listado paginado de {@link Loan}
      *
      * @param pageable pageable
      * @return {@link Page} de {@link Loan}

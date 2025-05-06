@@ -51,7 +51,6 @@ public class LoanController {
      */
     @Operation(summary = "Find Page", description = "Method that return a page of Loans")
     @RequestMapping(path = "", method = RequestMethod.POST)
-
     public Page<LoanDto> findPage(@RequestBody LoanSearchDto dto) {
         System.out.println(("Entrando en findpage"));
         Page<Loan> page = this.loanService.findPage(dto);

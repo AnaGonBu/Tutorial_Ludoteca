@@ -86,7 +86,7 @@ public class LoanServiceImpl implements LoanService {
 
         // Validar que el cliente no tenga más de un préstamo en el rango de fechas especificado
         long loanCountInDateRange = loanRepo.countByClientIdAndDateRange(loan.getClient().getId(), loan.getDate1(), loan.getDate2());
-        if (loanCountInDateRange >= 1) {
+        if (loanCountInDateRange >= 2) {
             throw new IllegalArgumentException("El cliente ya tiene un préstamo en el rango de fechas especificado.");
         }
 

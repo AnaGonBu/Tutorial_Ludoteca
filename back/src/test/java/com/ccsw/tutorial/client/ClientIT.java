@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -32,93 +32,77 @@ public class ClientIT {
 
     ParameterizedTypeReference<List<ClientDto>> responseType = new ParameterizedTypeReference<List<ClientDto>>() {
     };
-
-/*    @Test
-    public void saveWithoutIdShouldCreateNewCategory() {
-
-        CategoryDto dto = new CategoryDto();
-        dto.setName(NEW_CATEGORY_NAME);
-
-        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
-
-        ResponseEntity<List<CategoryDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
-        assertNotNull(response);
-        assertEquals(4, response.getBody().size());
-
-        CategoryDto categorySearch = response.getBody().stream().filter(item -> item.getId().equals(NEW_CATEGORY_ID)).findFirst().orElse(null);
-        assertNotNull(categorySearch);
-        assertEquals(NEW_CATEGORY_NAME, categorySearch.getName());
-    }
-
-    @Test
-    public void modifyWithNotExistIdShouldThrowException() {
-
-        long authorId = TOTAL_AUTHORS + 1;
-
-        AuthorDto dto = new AuthorDto();
-        dto.setName(NEW_AUTHOR_NAME);
-
-        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + authorId, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
-
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
-    }
-
-    @Test
-    public void modifyWithExistIdShouldModifyClient() {
-
-        CategoryDto dto = new CategoryDto();
-        dto.setName(NEW_CATEGORY_NAME);
-
-        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + MODIFY_CATEGORY_ID, HttpMethod.PUT, new HttpEntity<>(dto), Void.class);
-
-        ResponseEntity<List<CategoryDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
-        assertNotNull(response);
-        assertEquals(3, response.getBody().size());
-
-        CategoryDto categorySearch = response.getBody().stream().filter(item -> item.getId().equals(MODIFY_CATEGORY_ID)).findFirst().orElse(null);
-        assertNotNull(categorySearch);
-        assertEquals(NEW_CATEGORY_NAME, categorySearch.getName());
-    }*/
+    public static final String NEW_CLIENT_NAME = "Nuevo Cliente";
+    public static final Long EXISTING_CLIENT_ID = 1L;
+    public static final Long DELETE_CLIENT_ID = 8L;
+    public static final Long CLIENT_WITH_LOAN_ID = 2L;
+    public static final Long NON_EXISTENT_ID = 99L;
 
     @Test
     public void findAllShouldReturnAllClients() {
+        ResponseEntity<List<ClientDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+        assertNotNull(response);
+        assertEquals(8, response.getBody().size()); // Asegúrate que la base tiene 8 clientes inicialmente
+    }
+
+    @Test
+    public void saveWithoutIdShouldCreateNewClient() {
+        ClientDto dto = new ClientDto();
+        dto.setName(NEW_CLIENT_NAME);
+
+        HttpEntity<ClientDto> request = new HttpEntity<>(dto);
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.POST, request, Void.class);
 
         ResponseEntity<List<ClientDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
 
         assertNotNull(response);
-        assertEquals(8, response.getBody().size());
+        assertEquals(9, response.getBody().size());
+
+        boolean exists = response.getBody().stream().anyMatch(client -> NEW_CLIENT_NAME.equals(client.getName()));
+        assertTrue(exists);
+
     }
 
-    public static final Long DELETE_CLIENT_ID = 8L;
+    @Test
+    public void modifyWithExistIdShouldUpdateClient() {
+        String updatedName = "Nombre Modificado";
+        ClientDto dto = new ClientDto();
+        dto.setName(updatedName);
+
+        HttpEntity<ClientDto> request = new HttpEntity<>(dto);
+        restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + EXISTING_CLIENT_ID, HttpMethod.PUT, request, Void.class);
+
+        ResponseEntity<List<ClientDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+
+        assertNotNull(response);
+        ClientDto updatedClient = response.getBody().stream().filter(client -> client.getId().equals(EXISTING_CLIENT_ID)).findFirst().orElse(null);
+
+        assertNotNull(updatedClient);
+        assertEquals(updatedName, updatedClient.getName());
+
+    }
 
     @Test
     public void deleteWithExistsIdAndNoLoanShouldDeleteClient() {
-
         restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + DELETE_CLIENT_ID, HttpMethod.DELETE, null, Void.class);
 
         ResponseEntity<List<ClientDto>> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH, HttpMethod.GET, null, responseType);
+
         assertNotNull(response);
         assertEquals(7, response.getBody().size());
+
     }
 
-    public static final Long CLIENT_WITH_LOAN_ID = 2L;
-
     @Test
-    public void deleteClientWithLoanShouldThrowIntegrityConstraintViolationException() {
-        // Simula que el cliente con CLIENT_WITH_LOAN_ID tiene préstamos asociados
-        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + CLIENT_WITH_LOAN_ID, HttpMethod.DELETE, null, Void.class);
-
-        // Verifica que se lanza la excepción de violación de integridad referencial
+    public void deleteClientWithLoanShouldReturnError() {
+        ResponseEntity<String> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + CLIENT_WITH_LOAN_ID, HttpMethod.DELETE, null, String.class);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
     }
 
-    public static final Long NEW_CLIENT_ID = 20L;
-
     @Test
-    public void deleteWithNotExistsIdShouldInternalError() {
-
-        ResponseEntity<?> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + NEW_CLIENT_ID, HttpMethod.DELETE, null, Void.class);
-
+    public void deleteWithNotExistsIdShouldReturnError() {
+        ResponseEntity<String> response = restTemplate.exchange(LOCALHOST + port + SERVICE_PATH + "/" + NON_EXISTENT_ID, HttpMethod.DELETE, null, String.class);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+
     }
 }
