@@ -9,17 +9,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoanService } from '../loan.service';
 import { Loan } from '../model/loan';
 import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
-import { LoanEditComponent } from '../loan-register/loan-edit.component';
+import { LoanEditComponent, MY_DATE_FORMATS } from '../loan-register/loan-edit.component';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { MatFormField, MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Game } from '../../game/model/Game';
 import { Client } from '../../client/model/Client';
 import { ClientService } from '../../client/client.service';
 import { GameService } from '../../game/game.service';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @Component({
   selector: 'app-loan-list',
@@ -29,13 +29,16 @@ import { MatNativeDateModule } from '@angular/material/core';
             MatTableModule,
             MatPaginator,
             FormsModule,
-            MatFormFieldModule,
             MatInputModule,
             MatSelectModule,
             MatDatepickerModule,
-            MatNativeDateModule ],
+            MatNativeDateModule, MatFormField ],
   templateUrl: './loan-list.component.html',
-  styleUrl: './loan-list.component.scss'
+  styleUrl: './loan-list.component.scss',
+  providers: [
+    {provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS},
+    {provide: DateAdapter, useClass:MomentDateAdapter, deps: [MAT_DATE_LOCALE]}
+  ]
 })
 export class LoanListComponent implements OnInit {
 filterTitle: Game;
@@ -143,6 +146,9 @@ deleteLoan(loan: Loan) {
   dialogRef.afterClosed().subscribe((result) => {
       if (result) {
           this.loanService.deleteLoan(loan.id).subscribe((result) => {
+            this.dialog.open(DialogConfirmationComponent, {
+              data: { title: '', description: 'El préstamo se ha eliminado correctamente.', confirm: false }
+              });
               this.ngOnInit();
           });
       }

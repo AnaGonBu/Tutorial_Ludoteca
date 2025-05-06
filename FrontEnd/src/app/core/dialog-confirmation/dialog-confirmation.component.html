@@ -3,7 +3,11 @@
     <div [innerHTML]="description" class="description"></div>
 
     <div class="buttons">
+        @if(confirm){
         <button mat-stroked-button (click)="onClose()">No</button>
-        <button mat-flat-button color="primary" (click)="onClose(true)">Sí</button>
+        <button mat-stroked-button (click)="onClose(true)">Sí</button>
+        } @else{
+        <button mat-flat-button color="primary" (click)="onClose(true)">Aceptar</button>
+    }
     </div>
 </div>   
