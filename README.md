@@ -65,7 +65,7 @@ La aplicación permite gestionar clientes,autores, juegos y préstamos de videoj
 ## ⚠️ Pendiente / Consideraciones
 
 > ❗ **Captura de errores del backend**:  
-Actualmente no se devuelven respuestas HTTP detalladas cuando ocurre una excepción como `IllegalArgumentException`.  
+Actualmente no se recogen de forma adecuada las respuestas HTTP detalladas cuando ocurre una excepción como `IllegalArgumentException`.  
   
 🛠️ Esto dificulta mostrar mensajes claros al usuario en el frontend.
 
