@@ -46,9 +46,10 @@ La aplicación permite gestionar clientes,autores, juegos y préstamos de videoj
 
 ## ✅ Funcionalidades clave
 
-- ✔️ Alta, modificación y eliminación de clientes y juegos
-- ✔️ Alta de préstamos, con validación:
+- ✔️ Alta, modificación y eliminación de clientes, autores y juegos
+- ✔️ Alta de préstamos, con validación (restricción base de datos, un solo registro de préstamo por juego):
   - ❌ No se puede prestar un juego si ya está alquilado en cualquier otro rango de fechas
+  - ❌ No se puede prestar un juego si el cliente ya tiene dos préstamos en un ramgo de fechas
 - 🔍 Filtros en préstamos por:
   - Cliente
   - Juego
