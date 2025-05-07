@@ -90,7 +90,7 @@ public class LoanServiceImpl implements LoanService {
             throw new IllegalArgumentException("El cliente ya tiene un préstamo en el rango de fechas especificado.");
         }
 
-        // Validar que el juego no esté prestado en las fechas indicadas
+        // Validar que el juego no esté prestado en las fechas indicadas, aunque solo se permite un prestamo por juego
         boolean isGameLoaned = loanRepo.existsByGameIdAndDateRange(loan.getGame().getId(), loan.getDate1(), loan.getDate2());
         if (isGameLoaned) {
             throw new IllegalArgumentException("El juego ya está prestado en las fechas indicadas.");

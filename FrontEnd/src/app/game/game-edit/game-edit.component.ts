@@ -5,12 +5,13 @@ import { Game } from '../model/Game';
 import { AuthorService } from '../../author/author.service';
 import { CategoryService } from '../../category/category.service';
 import { GameService } from '../game.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
 
 @Component({
   selector: 'app-game-edit',
@@ -28,7 +29,8 @@ export class GameEditComponent implements OnInit{
       @Inject(MAT_DIALOG_DATA) public data: any,
       private gameService: GameService,
       private categoryService: CategoryService,
-      private authorService: AuthorService
+      private authorService: AuthorService,
+      public dialog: MatDialog
   ) {}
  
   ngOnInit(): void {
@@ -62,10 +64,25 @@ export class GameEditComponent implements OnInit{
   }
 
   onSave() {
-      this.gameService.saveGame(this.game).subscribe((result) => {
+      this.gameService.saveGame(this.game).subscribe({
+        next: () => {
+          this.dialog.open(DialogConfirmationComponent, {
+            data: { title: '', description: 'El juego se ha guardado correctamente.', confirm: false }
+          });
           this.dialogRef.close();
+        },
+        error: (error) => {
+          console.error('Error al guardar el juego:', error);
+          let errorMessage = 'Hubo un error al guardar el juego. Por favor, inténtalo de nuevo.';
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+          this.dialog.open(DialogConfirmationComponent, {
+            data: { title: 'Error', description: errorMessage, confirm: false }
+          });
+        }
       });
-  }
+    }
 
   onClose() {
       this.dialogRef.close();

@@ -53,7 +53,7 @@ public class ClientServiceImpl implements ClientService {
         }
 
     }
-    
+
     @Override
     public void delete(Long id) throws Exception {
 

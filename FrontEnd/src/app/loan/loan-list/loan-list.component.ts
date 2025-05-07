@@ -115,6 +115,8 @@ loadPage(event?: PageEvent){
   const game = this.filterTitle != null ? this.filterTitle.id : null;
   const client = this.filterClient != null ? this.filterClient.id : null;
   const date = this.filterDate != null ? this.filterDate.toISOString().split('T')[0] : null;
+  
+
 
   this.loanService.getLoans(pageable, game, client, date).subscribe((data)=>{
       this.dataSource.data = data.content.map(loanDto => {

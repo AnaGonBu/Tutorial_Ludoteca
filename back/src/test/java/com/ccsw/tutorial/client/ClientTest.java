@@ -3,8 +3,9 @@ package com.ccsw.tutorial.client;
 import com.ccsw.tutorial.client.model.Client;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,15 +18,14 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class ClientTest {
 
-    @Autowired
+    @Mock
     private ClientRepository clientRepository;
 
-    @Autowired
+    @InjectMocks
     private ClientServiceImpl clientServiceImpl;
 
     @Test
     public void findAllShouldReturnAllClients() {
-
         List<Client> list = new ArrayList<>();
         list.add(mock(Client.class));
 
@@ -41,11 +41,10 @@ public class ClientTest {
 
     @Test
     public void deleteExistsClientIdShouldDeleteClient() throws Exception {
-
         Client client = mock(Client.class);
         when(clientRepository.findById(EXISTS_CLIENT_ID)).thenReturn(Optional.of(client));
 
-        clientRepository.deleteById(EXISTS_CLIENT_ID);
+        clientServiceImpl.delete(EXISTS_CLIENT_ID);
 
         verify(clientRepository).deleteById(EXISTS_CLIENT_ID);
     }

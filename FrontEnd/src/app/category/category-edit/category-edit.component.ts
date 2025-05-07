@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Category } from '../model/Category';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -9,7 +9,7 @@ import { CategoryService } from '../category.service';
 
 @Component({
   selector: 'app-category-edit',
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule,],
+  imports: [FormsModule, ReactiveFormsModule, MatFormField, MatInputModule, MatButtonModule,],
   templateUrl: './category-edit.component.html',
   styleUrl: './category-edit.component.scss'
 })

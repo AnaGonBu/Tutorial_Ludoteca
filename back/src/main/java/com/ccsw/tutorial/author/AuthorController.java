@@ -31,7 +31,7 @@ public class AuthorController {
     ModelMapper mapper;
 
     /**
-     * Recupera el listado de autores {@link Author}
+     * Recupera el listado completo de autores {@link Author}
      *
      * @return {@link List} de {@link AuthorDto}
      */

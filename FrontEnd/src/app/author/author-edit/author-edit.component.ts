@@ -2,14 +2,14 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { MatError, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatError, MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { Author } from '../model/Author';
 import { AuthorService } from '../author.service';
 import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-author-edit',
-  imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule,MatError,MatLabel],
+  imports: [FormsModule, ReactiveFormsModule, MatFormField, MatInputModule, MatButtonModule,MatError],
   templateUrl: './author-edit.component.html',
   styleUrl: './author-edit.component.scss'
 })

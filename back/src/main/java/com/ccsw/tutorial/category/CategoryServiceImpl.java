@@ -64,35 +64,4 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository.deleteById(id);
     }
 
-    /**
-     * {@inheritDoc}
-
-
-     @Override public void delete(Long id) throws Exception {
-     if (this.categoryRepository.findById(id).orElse(null) == null) {
-     throw new EntityNotFoundException("Not exists category " + id);
-     }
-     try {
-     this.categoryRepository.deleteById(id);
-     } catch (DataIntegrityViolationException e) {
-     throw new ResponseStatusException(HttpStatus.CONFLICT, "No se puede eliminar la categoria, tiene juegos asociados");
-     }
-     }*/
-
-    /**
-     * {@inheritDoc}
-
-     @Override public void delete(Long id) throws Exception {
-
-     if (this.categoryRepository.findById(id).orElse(null) == null) {
-     throw new EntityNotFoundException("Not exists category" + id);
-     }
-     try {
-     this.categoryRepository.deleteById(id);
-     } catch (DataIntegrityViolationException e) {
-     throw new Exception("No se puede eliminar la categoria, tiene juegos asociados");
-     }
-
-     this.categoryRepository.deleteById(id);
-     }*/
 }

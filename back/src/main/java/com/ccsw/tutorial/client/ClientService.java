@@ -16,7 +16,7 @@ public interface ClientService {
     Client get(Long id);
 
     /**
-     * Método para recuperar todas los clientes
+     * Método para recuperar todos los clientes
      *
      * @return {@link List} de {@link Client}
      */
@@ -32,7 +32,8 @@ public interface ClientService {
     /**
      * Método para modificar  un cliente
      *
-     * @param id y dto datos de la entidad
+     * @param id de la entidad
+     * @param dto datos de la entidad
      */
     void save2(Long id, ClientDto dto);
 

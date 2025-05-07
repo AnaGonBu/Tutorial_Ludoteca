@@ -12,7 +12,7 @@ public interface LoanService {
 
     /**
      * Método para recuperar todos los prestamos
-     *me lo explicas?
+     *
      * @return {@link List} de {@link Client}
      */
     List<Loan> findAll();

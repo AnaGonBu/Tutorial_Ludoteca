@@ -29,7 +29,10 @@ public class LoanSpecification implements Specification<Loan> {
         } else if (criteria.getOperation().equalsIgnoreCase("between") && criteria.getValue() != null) {
             Date date = (Date) criteria.getValue();
             System.out.println("Comparing date: " + date);
-            return builder.and(builder.lessThanOrEqualTo(root.get("date1"), date), builder.greaterThanOrEqualTo(root.get("date2"), date));
+            Date startDate = new Date(date.getTime());
+            Date endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+            // return builder.and(builder.lessThan(root.get("date1"), date), builder.greaterThanOrEqualTo(root.get("date2"), date));
+            return builder.and(builder.lessThanOrEqualTo(root.get("date1"), endDate), builder.greaterThanOrEqualTo(root.get("date2"), startDate));
         }
 
         return null;
