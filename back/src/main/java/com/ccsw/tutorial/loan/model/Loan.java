@@ -16,7 +16,7 @@ public class Loan implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 
