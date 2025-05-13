@@ -42,7 +42,9 @@ La aplicación permite gestionar clientes,autores, juegos y préstamos de videoj
 - `author.component`: paginación y gestión de autores
 - `loan.component`: paginación, filtrado, alta, baja y visualización de préstamos
 
----
+---  
+[GitDiagram](https://gitdiagram.com/AnaGonBu/Tutorial_Ludoteca)  
+![Diagrama](/Screenshots/diagram.png)
 
 ## ✅ Funcionalidades clave
 
