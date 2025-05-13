@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatError, MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -18,6 +18,7 @@ export class AuthorEditComponent implements OnInit{
 
   author:Author;
   nameError: string;
+  authorForm: any;
 
 
 
@@ -33,6 +34,11 @@ export class AuthorEditComponent implements OnInit{
 ngOnInit(): void {
 
   this.author= this.data.author? Object.assign({}, this.data.author) : new Author;
+  this.authorForm = new FormGroup({
+        name: new FormControl('', Validators.required),
+        nationality: new FormControl('', Validators.required)
+  });
+
 
 }
 

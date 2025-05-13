@@ -1,14 +1,14 @@
 <div class="container">
     <h1>Crear préstamo</h1>
 
-    <form >
+    <form [formGroup]="loanForm" (ngSubmit)="onSave()">
         <mat-form-field>
             <mat-label>Identificador</mat-label>
             <input type="text" matInput placeholder={{loan.id}} [(ngModel)]="loan.id" name="id" disabled>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Juego</mat-label>
-            <mat-select disableRipple [(ngModel)]="loan.game" name="game" required>
+            <mat-select disableRipple formControlName="game" [(ngModel)]="loan.game" name="game" required>
                 @for (game of games; track game.id) {
                     <mat-option [value]="game">{{game.title}}</mat-option>
                 }
@@ -17,7 +17,7 @@
         </mat-form-field>
         <mat-form-field>
             <mat-label>Cliente</mat-label>
-            <mat-select disableRipple [(ngModel)]="loan.client" name="client" required>
+            <mat-select disableRipple formControlName="client" [(ngModel)]="loan.client" name="client" required>
                 @for (client of clients; track client.id) {
                     <mat-option [value]="client">{{client.name}}</mat-option>
                 }
@@ -25,14 +25,14 @@
             <mat-error>La categoría no puede estar vacía</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input matInput [matDatepicker]="picker1" placeholder="Fecha inicio" [(ngModel)]="loan.date1" name="date1" required>
+            <input matInput formControlName="date1" [matDatepicker]="picker1" placeholder="Fecha inicio" [(ngModel)]="loan.date1" name="date1" required>
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> 
             <mat-datepicker #picker1></mat-datepicker>
             <mat-error>La fecha no puede estar vacía</mat-error>
             </mat-form-field>
             
         <mat-form-field>
-            <input matInput [matDatepicker]="picker2" placeholder="Fecha fin" [(ngModel)]="loan.date2" name="date2" required>
+            <input matInput formControlName="date2" [matDatepicker]="picker2" placeholder="Fecha fin" [(ngModel)]="loan.date2" name="date2" required>
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
             <mat-error>La fecha no puede estar vacía</mat-error>
@@ -42,6 +42,6 @@
 
     <div class="buttons">
         <button mat-stroked-button (click)="onClose()">Cerrar</button>
-        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+        <button mat-flat-button color="primary" (click)="onSave()" [disabled]="!loanForm.valid">Guardar</button>
     </div>
 </div>

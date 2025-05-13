@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField, MatInputModule, } from '@angular/material/input';
 import { Loan } from '../model/loan';
@@ -49,6 +49,7 @@ export class LoanEditComponent implements OnInit {
   loan: Loan;
   clients: Client[] =[];
   games: Game[] = [];
+  loanForm: any;
 
   constructor(
     public dialogRef: MatDialogRef<LoanEditComponent>,
@@ -61,6 +62,13 @@ export class LoanEditComponent implements OnInit {
 ) {}
 
   ngOnInit(): void {
+      this.loanForm = new FormGroup({
+    //  id: new FormControl({ value: this.data.loan?.id || '', disabled: true }),
+     game: new FormControl(this.data.loan?.game || '', Validators.required),
+     client: new FormControl(this.data.loan?.client || '', Validators.required),
+     date1: new FormControl(this.data.loan?.date1 || '', Validators.required),
+     date2: new FormControl(this.data.loan?.date2 || '', Validators.required)
+   });
 
     this.loan = this.data.loan ? Object.assign({}, this.data.loan) : new Loan();
     
@@ -92,45 +100,43 @@ export class LoanEditComponent implements OnInit {
     }
     
 
-onSave() {
-  const date1 = new Date(this.loan.date1);
-  const date2 = new Date(this.loan.date2);
-  const diffDays = Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
+ onSave() {
+   if (this.loanForm.valid) {
+     const loan: Loan = this.loanForm.getRawValue();
+     const date1 = new Date(loan.date1);
+     const date2 = new Date(loan.date2);
+     const diffDays = Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 3600 * 24));
 
-   if (date2 <= date1) {
-     this.dialog.open(DialogConfirmationComponent, {
-        data: { tittle:'Error', description:'La fecha de finalización debe ser posterior a la fecha de inicio.',
-          confirm: false
-        }
-      });   
-     return;
-     }      
-  if (diffDays > 14) {
-     this.dialog.open(DialogConfirmationComponent, {
-        data: { tittle:'Error', description:'La diferencia entre las fechas no puede ser mayor a 14 días.',
-          confirm: false
-        }
-      });
-  return;
-  }
-      
-  this.loanService.saveLoan(this.loan).subscribe({
-  next: () => {
-    this.dialog.open(DialogConfirmationComponent, {
-      data: { title: '', description: 'El préstamo se ha guardado correctamente.', confirm: false }
-      });
-      this.dialogRef.close();    
-  },
-  error: (error) => {
-      console.error('Error al guardar el préstamo:', error);
-      this.dialog.open(DialogConfirmationComponent, {
-        data: { tittle:'Error', description:'Hubo un error al guardar el préstamo. Por favor, inténtalo de nuevo.',
-          confirm: false }
-      });
-      
-  }
-  });
-}    
+     if (date2 <= date1) {
+       this.dialog.open(DialogConfirmationComponent, {
+         data: { title: 'Error', description: 'La fecha de finalización debe ser posterior a la fecha de inicio.', confirm: false }
+       });
+       return;
+     }
+
+     if (diffDays > 14) {
+       this.dialog.open(DialogConfirmationComponent, {
+         data: { title: 'Error', description: 'La diferencia entre las fechas no puede ser mayor a 14 días.', confirm: false }
+       });
+       return;
+     }
+
+     this.loanService.saveLoan(loan).subscribe({
+       next: () => {
+         this.dialog.open(DialogConfirmationComponent, {
+           data: { title: '', description: 'El préstamo se ha guardado correctamente.', confirm: false }
+         });
+         this.dialogRef.close();
+       },
+       error: (error) => {
+         console.error('Error al guardar el préstamo:', error);
+         this.dialog.open(DialogConfirmationComponent, {
+           data: { title: 'Error', description: 'Hubo un error al guardar el préstamo. Por favor, inténtalo de nuevo.', confirm: false }
+         });
+       }
+     });
+   }
+ }
 
 onClose() {
   this.dialogRef.close();

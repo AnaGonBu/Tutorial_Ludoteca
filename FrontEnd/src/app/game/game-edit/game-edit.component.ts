@@ -6,7 +6,7 @@ import { AuthorService } from '../../author/author.service';
 import { CategoryService } from '../../category/category.service';
 import { GameService } from '../game.service';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -24,6 +24,7 @@ export class GameEditComponent implements OnInit{
   authors: Author[];
   categories: Category[];
   nameError: string;
+  gameForm: any;
 
   constructor(
       public dialogRef: MatDialogRef<GameEditComponent>,
@@ -31,66 +32,55 @@ export class GameEditComponent implements OnInit{
       private gameService: GameService,
       private categoryService: CategoryService,
       private authorService: AuthorService,
-      public dialog: MatDialog
+      public dialog: MatDialog,
+
   ) {}
  
-  ngOnInit(): void {
-      this.game = this.data.game ? Object.assign({}, this.data.game) : new Game();
+ ngOnInit(): void {
+   this.gameForm = new FormGroup({
+     title: new FormControl(this.data.game?.title || '', [Validators.required, this.validateName.bind(this)]),
+     age: new FormControl(this.data.game?.age || '', [Validators.required, this.validateAge.bind(this)]),
+     author: new FormControl(this.data.game?.author || '', Validators.required),
+     category: new FormControl(this.data.game?.category || '', Validators.required)
+   });
 
-      this.categoryService.getCategories().subscribe((categories) => {
-          this.categories = categories;
+   this.categoryService.getCategories().subscribe((categories) => {
+     this.categories = categories;
+   });
 
-          if (this.game.category != null) {
-              const categoryFilter: Category[] = categories.filter(
-                  (category) => category.id == this.data.game.category.id
-              );
-              if (categoryFilter != null) {
-                  this.game.category = categoryFilter[0];
-              }
-          }
-      });
+   this.authorService.getAllAuthors().subscribe((authors) => {
+     this.authors = authors;
+   });
+ }
 
-      this.authorService.getAllAuthors().subscribe((authors) => {
-          this.authors = authors;
-
-          if (this.game.author != null) {
-              const authorFilter: Author[] = authors.filter(
-                  (author) => author.id == this.data.game.author.id
-              );
-              if (authorFilter != null) {
-                  this.game.author = authorFilter[0];
-              }
-          }
-      });
-  }
-
-onSave() {
-    this.game.title = this.toCamelCase(this.game.title);
-    if (this.validateName(this.game.title) && this.validateAge(this.game.age)) {
-    this.gameService.saveGame(this.game).subscribe({
-      next: () => {
-        this.dialog.open(DialogConfirmationComponent, {
-        data: { title: '', description: 'El juego se ha guardado correctamente.', confirm: false }
-      });
-        this.dialogRef.close();
-      },
-      error: (error) => {
-      console.error('Error al guardar el juego:', error);
-      let errorMessage = 'Hubo un error al guardar el juego. Por favor, inténtalo de nuevo.';
-      if (error.error && error.error.message) {
-        errorMessage = error.error.message;
-      }
-      this.dialog.open(DialogConfirmationComponent, {
-         data: { title: 'Error', description: errorMessage, confirm: false }
-      });
-      }
-    });
-} else {
-    this.dialog.open(DialogConfirmationComponent, {
-      data: { title: 'Error', description: this.nameError, confirm: false }
-    });
-    }
-}
+ onSave() {
+   if (this.gameForm.valid) {
+     const game: Game = this.gameForm.value;
+     game.title = this.toCamelCase(game.title);
+     this.gameService.saveGame(game).subscribe({
+       next: () => {
+         this.dialog.open(DialogConfirmationComponent, {
+           data: { title: '', description: 'El juego se ha guardado correctamente.', confirm: false }
+         });
+         this.dialogRef.close();
+       },
+       error: (error) => {
+         console.error('Error al guardar el juego:', error);
+         let errorMessage = 'Hubo un error al guardar el juego. Por favor, inténtalo de nuevo.';
+         if (error.error && error.error.message) {
+           errorMessage = error.error.message;
+         }
+         this.dialog.open(DialogConfirmationComponent, {
+           data: { title: 'Error', description: errorMessage, confirm: false }
+         });
+       }
+     });
+   } else {
+     this.dialog.open(DialogConfirmationComponent, {
+       data: { title: 'Error', description: this.nameError, confirm: false }
+     });
+   }
+ }
     
 
   toCamelCase(str: string): string {

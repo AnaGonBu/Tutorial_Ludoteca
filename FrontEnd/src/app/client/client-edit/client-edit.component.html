@@ -20,7 +20,7 @@
 
     <div class="buttons">
         <button mat-stroked-button color="primary" (click)="onClose()">Cerrar</button>
-        <button mat-flat-button color="primary" (click)="onSave()">Guardar</button>
+        <button mat-flat-button color="primary" (click)="onSave()" [disabled]="!clientForm.valid">Guardar</button>
     </div>
 </div>
 

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormField } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +18,7 @@ export class CategoryEditComponent implements OnInit {
 
   category: Category;
   nameError: string;
+  categoryForm: any;
 
   constructor(
     public dialogRef: MatDialogRef<CategoryEditComponent>,
@@ -28,6 +29,9 @@ export class CategoryEditComponent implements OnInit {
 
 ngOnInit(): void {
   this.category = this.data.category ? Object.assign({}, this.data.category) : new Category();
+  this.categoryForm = new FormGroup({
+    name: new FormControl('', Validators.required)
+  });
 }
 
 

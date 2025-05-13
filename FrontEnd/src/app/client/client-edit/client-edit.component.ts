@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { Client } from '../model/Client';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -18,6 +18,7 @@ export class ClientEditComponent implements OnInit {
 
   client: Client;
   nameError: string;
+clientForm: any;
 
 
   constructor(
@@ -29,7 +30,10 @@ export class ClientEditComponent implements OnInit {
 
 ngOnInit(): void {
     this.client = this.data.client ? Object.assign({},this.data.client) : new Client();
-}
+    this.clientForm = new FormGroup({
+          name: new FormControl('', Validators.required),
+    });
+  }
 
 onSave() {  
 this.client.name = this.toCamelCase(this.client.name);
