@@ -30,6 +30,7 @@ export class CategoryEditComponent implements OnInit {
 ngOnInit(): void {
   this.category = this.data.category ? Object.assign({}, this.data.category) : new Category();
   this.categoryForm = new FormGroup({
+    id: new FormControl({ value: this.data.category?.id || '', disabled: true }),
     name: new FormControl('', Validators.required)
   });
 }

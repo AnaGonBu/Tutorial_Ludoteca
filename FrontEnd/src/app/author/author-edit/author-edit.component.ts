@@ -35,6 +35,7 @@ ngOnInit(): void {
 
   this.author= this.data.author? Object.assign({}, this.data.author) : new Author;
   this.authorForm = new FormGroup({
+        id: new FormControl({ value: this.data.author?.id || '', disabled: true }),
         name: new FormControl('', Validators.required),
         nationality: new FormControl('', Validators.required)
   });

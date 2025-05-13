@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { Client } from '../model/Client';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -10,7 +10,7 @@ import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dial
 
 @Component({
   selector: 'app-client-edit',
-  imports: [MatFormField,MatError,MatLabel,FormsModule,MatButtonModule,MatInput,MatLabel],
+  imports: [MatFormField,MatError,MatLabel,FormsModule,MatButtonModule,MatInput,MatLabel, ReactiveFormsModule],
   templateUrl: './client-edit.component.html',
   styleUrl: './client-edit.component.scss'
 })
@@ -18,7 +18,7 @@ export class ClientEditComponent implements OnInit {
 
   client: Client;
   nameError: string;
-clientForm: any;
+  clientForm: any;
 
 
   constructor(
@@ -31,6 +31,7 @@ clientForm: any;
 ngOnInit(): void {
     this.client = this.data.client ? Object.assign({},this.data.client) : new Client();
     this.clientForm = new FormGroup({
+          id: new FormControl({ value: this.data.client?.id || '', disabled: true }),
           name: new FormControl('', Validators.required),
     });
   }

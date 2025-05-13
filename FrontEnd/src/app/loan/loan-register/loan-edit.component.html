@@ -4,7 +4,7 @@
     <form [formGroup]="loanForm" (ngSubmit)="onSave()">
         <mat-form-field>
             <mat-label>Identificador</mat-label>
-            <input type="text" matInput placeholder={{loan.id}} [(ngModel)]="loan.id" name="id" disabled>
+            <input type="text" formControlName="id" matInput placeholder={{loan.id}} [(ngModel)]="loan.id" name="id" disabled>
         </mat-form-field>
         <mat-form-field>
             <mat-label>Juego</mat-label>
