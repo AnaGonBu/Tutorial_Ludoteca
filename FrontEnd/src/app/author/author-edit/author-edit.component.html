@@ -8,7 +8,7 @@
     <form [formGroup]="authorForm" (ngSubmit)="onSave()">
         <mat-form-field>
             <mat-label>Identificador</mat-label>
-            <input type="text" formControlName="id"  matInput placeholder="Identificador" [(ngModel)]="author.id" name="id" disabled>
+            <input type="text" formControlName="author"  matInput placeholder="Identificador" [(ngModel)]="author.id" name="id" disabled>
         </mat-form-field>
 
         <mat-form-field>

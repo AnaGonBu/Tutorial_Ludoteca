@@ -46,13 +46,13 @@ this.category.name = this.toCamelCase(this.category.name);
     this.categoryService.saveCategory(this.category).subscribe({
       next: () => {
         this.dialog.open(DialogConfirmationComponent, {
-          data: { title: '', description: 'El autor se ha guardado correctamente.', confirm: false }
+          data: { title: '', description: 'La categoria se ha guardado correctamente.', confirm: false }
         });
         this.dialogRef.close();
       },
       error: (error) => {
         console.error('Error al guardar el autor:', error);
-        let errorMessage = 'Hubo un error al guardar el autor. Por favor, inténtalo de nuevo.';
+        let errorMessage = 'Hubo un error al guardar la categoria. Por favor, inténtalo de nuevo.';
         if (error.error && error.error.message) {
           errorMessage = error.error.message;
         }

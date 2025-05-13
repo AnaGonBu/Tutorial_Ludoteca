@@ -28,7 +28,7 @@ export class GameEditComponent implements OnInit{
 
   constructor(
       public dialogRef: MatDialogRef<GameEditComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: any,
+      @Inject(MAT_DIALOG_DATA) public data : {game : Game},
       private gameService: GameService,
       private categoryService: CategoryService,
       private authorService: AuthorService,
