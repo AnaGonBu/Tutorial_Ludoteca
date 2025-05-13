@@ -10,6 +10,7 @@ import { Pageable } from '../../core/model/page/Pageable';
 import { MatDialog} from '@angular/material/dialog';
 import { AuthorEditComponent } from '../author-edit/author-edit.component';
 import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-author-list',
@@ -27,7 +28,8 @@ export class AuthorListComponent implements OnInit {
   dataSource = new MatTableDataSource<Author>();
   displayedColumns: string[] = ['id', 'name', 'nationality', 'action'];
 
-  constructor (private authorService: AuthorService, public dialog: MatDialog){}
+  constructor (private authorService: AuthorService, public dialog: MatDialog,){}
+
 
   ngOnInit(): void {
     this.loadPage();

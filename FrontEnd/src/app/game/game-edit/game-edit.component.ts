@@ -23,6 +23,7 @@ export class GameEditComponent implements OnInit{
   game: Game;
   authors: Author[];
   categories: Category[];
+  nameError: string;
 
   constructor(
       public dialogRef: MatDialogRef<GameEditComponent>,
@@ -63,26 +64,63 @@ export class GameEditComponent implements OnInit{
       });
   }
 
-  onSave() {
-      this.gameService.saveGame(this.game).subscribe({
-        next: () => {
-          this.dialog.open(DialogConfirmationComponent, {
-            data: { title: '', description: 'El juego se ha guardado correctamente.', confirm: false }
-          });
-          this.dialogRef.close();
-        },
-        error: (error) => {
-          console.error('Error al guardar el juego:', error);
-          let errorMessage = 'Hubo un error al guardar el juego. Por favor, inténtalo de nuevo.';
-          if (error.error && error.error.message) {
-            errorMessage = error.error.message;
-          }
-          this.dialog.open(DialogConfirmationComponent, {
-            data: { title: 'Error', description: errorMessage, confirm: false }
-          });
-        }
+onSave() {
+    this.game.title = this.toCamelCase(this.game.title);
+    if (this.validateName(this.game.title) && this.validateAge(this.game.age)) {
+    this.gameService.saveGame(this.game).subscribe({
+      next: () => {
+        this.dialog.open(DialogConfirmationComponent, {
+        data: { title: '', description: 'El juego se ha guardado correctamente.', confirm: false }
       });
+        this.dialogRef.close();
+      },
+      error: (error) => {
+      console.error('Error al guardar el juego:', error);
+      let errorMessage = 'Hubo un error al guardar el juego. Por favor, inténtalo de nuevo.';
+      if (error.error && error.error.message) {
+        errorMessage = error.error.message;
+      }
+      this.dialog.open(DialogConfirmationComponent, {
+         data: { title: 'Error', description: errorMessage, confirm: false }
+      });
+      }
+    });
+} else {
+    this.dialog.open(DialogConfirmationComponent, {
+      data: { title: 'Error', description: this.nameError, confirm: false }
+    });
     }
+}
+    
+
+  toCamelCase(str: string): string {
+    return str
+      .toLowerCase()
+      .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase())
+      .replace(/\s+/g, ' ')
+      .replace(/(?:^|\s)\S/g, (match) => match.toUpperCase())
+      .replace(/\s+/g, ' ');
+  }
+    
+  validateName(name: string): boolean {
+    const namePattern = /^[A-Z][a-zA-Z]*(?:\s[A-Z]\.)?(?:\s[A-Z][a-zA-Z]*)*(?:-[A-Z][a-zA-Z]*)*$/;
+    if (!namePattern.test(name)) {
+      this.nameError = 'El nombre debe tener al menos 3 caracteres y no contener caracteres especiales.';
+      return false;
+    }
+    this.nameError = '';
+    return true;
+  }
+  
+validateAge(age: number): boolean {
+  if (age <= 0) {
+  this.nameError = 'La edad debe ser mayor que 0.';
+    return false;
+  }
+  this.nameError = '';
+  return true;
+  }
+  
 
   onClose() {
       this.dialogRef.close();

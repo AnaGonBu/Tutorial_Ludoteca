@@ -18,10 +18,6 @@ import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dial
 
 
 
-
-
-
-
 export const MY_DATE_FORMATS={
   parse: {
     dateInput : 'DD-MM-YYYY',

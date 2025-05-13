@@ -17,6 +17,7 @@ import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dial
 export class ClientEditComponent implements OnInit {
 
   client: Client;
+  nameError: string;
 
 
   constructor(
@@ -30,7 +31,9 @@ ngOnInit(): void {
     this.client = this.data.client ? Object.assign({},this.data.client) : new Client();
 }
 
-onSave() {
+onSave() {  
+this.client.name = this.toCamelCase(this.client.name);
+  if (this.validateName(this.client.name)){
     this.clientService.saveClient(this.client).subscribe({
       next: () => {
         this.dialog.open(DialogConfirmationComponent, {
@@ -49,7 +52,32 @@ onSave() {
         });
       }
     });
+  } else {
+    this.dialog.open(DialogConfirmationComponent, {
+      data: { title: 'Error', description: this.nameError, confirm: false }
+    });
   }
+}
+
+ toCamelCase(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) => index === 0 ? word.toLowerCase() : word.toUpperCase())
+    .replace(/\s+/g, ' ')
+    .replace(/(?:^|\s)\S/g, (match) => match.toUpperCase())
+    .replace(/\s+/g, ' ');
+}
+
+validateName(name: string): boolean {
+  const namePattern = /^[A-Z][a-zA-Z]*(?:\s[A-Z]\.)?(?:\s[A-Z][a-zA-Z]*)*(?:-[A-Z][a-zA-Z]*)*$/;
+  if (!namePattern.test(name)) {
+    this.nameError = 'El nombre debe tener al menos 3 caracteres y no contener caracteres especiales.';
+    return false;
+  }
+  this.nameError = '';
+  return true;
+}
+
   
 
 onClose() {
