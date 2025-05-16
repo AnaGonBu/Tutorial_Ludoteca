@@ -74,24 +74,11 @@ public class AuthorController {
         this.authorService.save(id, dto);
 
     }
-
+    
     /**
      * Método para eliminar un {@link Author}
      *
      * @param id PK de la entidad
-
-     @Operation(summary = "Delete", description = "Method that deletes a Author")
-     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-     public void delete(@PathVariable("id") Long id) throws Exception {
-
-     this.authorService.delete(id);
-
-     }
-
-     /**
-      * Método para eliminar un {@link Author}
-      *
-      * @param id PK de la entidad
      */
     @Operation(summary = "Delete", description = "Method that deletes an Author")
     @DeleteMapping("/{id}")

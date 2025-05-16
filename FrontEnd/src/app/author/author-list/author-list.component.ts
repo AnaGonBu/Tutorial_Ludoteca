@@ -1,130 +1,122 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { Author } from '../model/Author';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { AuthorService } from '../author.service';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { Pageable } from '../../core/model/page/Pageable';
-import { MatDialog} from '@angular/material/dialog';
-import { AuthorEditComponent } from '../author-edit/author-edit.component';
-import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dialog-confirmation.component';
-import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CommonModule } from "@angular/common";
+import { Component, OnInit } from "@angular/core";
+import { Author } from "../model/Author";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { AuthorService } from "../author.service";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { Pageable } from "../../core/model/page/Pageable";
+import { MatDialog } from "@angular/material/dialog";
+import { AuthorEditComponent } from "../author-edit/author-edit.component";
+import { DialogConfirmationComponent } from "../../core/dialog-confirmation/dialog-confirmation.component";
+import { MatPaginatorIntl } from "@angular/material/paginator";
 
 @Component({
-  selector: 'app-author-list',
-  imports: [CommonModule, MatButtonModule,MatIconModule, MatTableModule,MatPaginator,],
-  templateUrl: './author-list.component.html',
-  styleUrl: './author-list.component.scss'
+  selector: "app-author-list",
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginator,
+  ],
+  templateUrl: "./author-list.component.html",
+  styleUrl: "./author-list.component.scss",
 })
 export class AuthorListComponent implements OnInit {
-
   pageNumber: number = 0;
-  pageSizeOptions : number []= [5,10,15]
+  pageSizeOptions: number[] = [5, 10, 15];
   pageSize: number = this.pageSizeOptions[0];
   totalElements: number = 0;
 
   dataSource = new MatTableDataSource<Author>();
-  displayedColumns: string[] = ['id', 'name', 'nationality', 'action'];
+  displayedColumns: string[] = ["id", "name", "nationality", "action"];
 
-  constructor (private authorService: AuthorService, public dialog: MatDialog,){}
-
+  constructor(private authorService: AuthorService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadPage();
   }
 
-  loadPage(event?: PageEvent){
+  loadPage(event?: PageEvent) {
     const pageable: Pageable = {
       pageNumber: this.pageNumber,
       pageSize: this.pageSize,
       sort: [
         {
-          property: 'id',
-          direction: 'ASC'
+          property: "id",
+          direction: "ASC",
         },
       ],
     };
     if (event != null) {
-      pageable.pageSize = event.pageSize
+      pageable.pageSize = event.pageSize;
       pageable.pageNumber = event.pageIndex;
     }
 
-    this.authorService.getAuthors(pageable).subscribe((data)=>{
-        this.dataSource.data = data.content;
-        this.pageNumber = data.pageable.pageNumber;
-        this.pageSize = data.pageable.pageSize;
-        this.totalElements = data.totalElements;
+    this.authorService.getAuthors(pageable).subscribe((data) => {
+      this.dataSource.data = data.content;
+      this.pageNumber = data.pageable.pageNumber;
+      this.pageSize = data.pageable.pageSize;
+      this.totalElements = data.totalElements;
     });
   }
 
-createAuthor() {
-  const dialogRef = this.dialog.open(AuthorEditComponent, {
-    data: {},
-  });
+  createAuthor() {
+    const dialogRef = this.dialog.open(AuthorEditComponent, {
+      data: {},
+    });
 
-  dialogRef.afterClosed().subscribe((result) => {
-    this.ngOnInit();
-  });
-}
-
-
-editAuthor(author: Author) {
-  const dialogRef = this.dialog.open(AuthorEditComponent, {
-      data: { author: author },
-  });
-
-  dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result) => {
       this.ngOnInit();
-  });
-}
+    });
+  }
 
-// deleteAuthor(author: Author) {
-//   const dialogRef = this.dialog.open(DialogConfirmationComponent, {
-//       data: {
-//           title: `¿Desea eliminar a ${author.name}?`,
-//           description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
+  editAuthor(author: Author) {
+    const dialogRef = this.dialog.open(AuthorEditComponent, {
+      data: { author: author },
+    });
 
-//       },
-//   });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.ngOnInit();
+    });
+  }
 
-//   dialogRef.afterClosed().subscribe((result) => {
-//       if (result) {
-//           this.authorService.deleteAuthor(author.id).subscribe((result) => {
-//               this.ngOnInit();
-//           });
-//       }
-//   });
-// }
+  deleteAuthor(author: Author) {
+    const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+      data: {
+        title: `¿Desea eliminar a ${author.name}?`,
+        description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
+      },
+    });
 
-deleteAuthor(author: Author) {
-  const dialogRef = this.dialog.open(DialogConfirmationComponent, {
-    data: {
-      title: `¿Desea eliminar a ${author.name}?`,
-      description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
-    },
-  });
-
-  dialogRef.afterClosed().subscribe((result) => {
-    if (result) {
-      this.authorService.deleteAuthor(author.id).subscribe({
-        next: () => {
-          this.dialog.open(DialogConfirmationComponent, {
-            data: { title: '', description: 'El autor se ha eliminado correctamente.', confirm: false }
-          });
-          this.loadPage(); // Actualiza la lista después de eliminar
-        },
-        error: (error) => {
-          console.error('Error al eliminar el autor:', error);
-          this.dialog.open(DialogConfirmationComponent, {
-            data: { title: 'Error', description: 'Hubo un error al eliminar el autor. Por favor, inténtalo de nuevo.', confirm: false }
-          });
-        }
-      });
-    }
-  });
-}
-
-
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.authorService.deleteAuthor(author.id).subscribe({
+          next: () => {
+            this.dialog.open(DialogConfirmationComponent, {
+              data: {
+                title: "",
+                description: "El autor se ha eliminado correctamente.",
+                confirm: false,
+              },
+            });
+            this.loadPage(); // Actualiza la lista después de eliminar
+          },
+          error: (error) => {
+            console.error("Error al eliminar el autor:", error);
+            this.dialog.open(DialogConfirmationComponent, {
+              data: {
+                title: "Error",
+                description:
+                  "Hubo un error al eliminar el autor. Por favor, inténtalo de nuevo.",
+                confirm: false,
+              },
+            });
+          },
+        });
+      }
+    });
+  }
 }
