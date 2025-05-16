@@ -140,7 +140,7 @@ deleteLoan(loan: Loan) {
   const dialogRef = this.dialog.open(DialogConfirmationComponent, {
       data: {
           title: `¿Desea eliminar el préstamo de ${loan.game.title}?`,
-          description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
+          description: `Atención si borra el préstamo se perderán sus datos.<br> ¿Desea eliminarlo?`,
 
       },
   });
