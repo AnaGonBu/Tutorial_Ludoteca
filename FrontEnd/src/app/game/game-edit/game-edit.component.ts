@@ -37,6 +37,7 @@ export class GameEditComponent implements OnInit{
   ) {}
  
  ngOnInit(): void {
+  this.game = this.data.game ? Object.assign({}, this.data.game) : new Game();
    this.gameForm = new FormGroup({
      id: new FormControl({ value: this.data.game?.id || '', disabled: true }),
      title: new FormControl(this.data.game?.title || '', [Validators.required, this.validateName.bind(this)]),

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormField } from '@angular/material/form-field';
+import { MatFormField, MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Category } from '../model/Category';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -10,9 +10,10 @@ import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dial
 
 @Component({
   selector: 'app-category-edit',
-  imports: [FormsModule, ReactiveFormsModule, MatFormField, MatInputModule, MatButtonModule,],
+  standalone: true, 
+  imports: [FormsModule, ReactiveFormsModule, MatFormField, MatInputModule, MatButtonModule,MatFormFieldModule],
   templateUrl: './category-edit.component.html',
-  styleUrl: './category-edit.component.scss'
+  styleUrls: ['./category-edit.component.scss']
 })
 export class CategoryEditComponent implements OnInit {
 
