@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormControlName, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatError, MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
@@ -10,6 +10,7 @@ import { DialogConfirmationComponent } from '../../core/dialog-confirmation/dial
 
 @Component({
   selector: 'app-author-edit',
+  standalone: true,
   imports: [FormsModule, ReactiveFormsModule, MatFormField, MatInputModule, MatButtonModule,MatError],
   templateUrl: './author-edit.component.html',
   styleUrl: './author-edit.component.scss'

@@ -80,22 +80,51 @@ editAuthor(author: Author) {
   });
 }
 
+// deleteAuthor(author: Author) {
+//   const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+//       data: {
+//           title: `¿Desea eliminar a ${author.name}?`,
+//           description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
+
+//       },
+//   });
+
+//   dialogRef.afterClosed().subscribe((result) => {
+//       if (result) {
+//           this.authorService.deleteAuthor(author.id).subscribe((result) => {
+//               this.ngOnInit();
+//           });
+//       }
+//   });
+// }
+
 deleteAuthor(author: Author) {
-  const dialogRef = this.dialog.open(DialogConfirmationComponent, {
-      data: {
-          title: `¿Desea eliminar a ${author.name}?`,
-          description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
+  const dialogRef = this.dialog.open(DialogConfirmationComponent, {
+    data: {
+      title: `¿Desea eliminar a ${author.name}?`,
+      description: `Atención si borra el autor se perderán sus datos.<br> ¿Desea eliminarlo?`,
+    },
+  });
 
-      },
-  });
-
-  dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-          this.authorService.deleteAuthor(author.id).subscribe((result) => {
-              this.ngOnInit();
-          });
-      }
-  });
+  dialogRef.afterClosed().subscribe((result) => {
+    if (result) {
+      this.authorService.deleteAuthor(author.id).subscribe({
+        next: () => {
+          this.dialog.open(DialogConfirmationComponent, {
+            data: { title: '', description: 'El autor se ha eliminado correctamente.', confirm: false }
+          });
+          this.loadPage(); // Actualiza la lista después de eliminar
+        },
+        error: (error) => {
+          console.error('Error al eliminar el autor:', error);
+          this.dialog.open(DialogConfirmationComponent, {
+            data: { title: 'Error', description: 'Hubo un error al eliminar el autor. Por favor, inténtalo de nuevo.', confirm: false }
+          });
+        }
+      });
+    }
+  });
 }
+
 
 }
